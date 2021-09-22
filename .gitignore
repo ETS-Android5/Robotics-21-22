@@ -1,3 +1,9 @@
+# Ignore custom files
+~*
+
+# Ignore .replit
+.replit
+
 # built application files
 *.apk
 *.ap_
