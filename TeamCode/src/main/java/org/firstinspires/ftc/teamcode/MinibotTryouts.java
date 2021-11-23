@@ -2,10 +2,8 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
 
 @TeleOp(name="Minibots tryout code", group="tryouts")
 public class MinibotTryouts extends LinearOpMode {
@@ -21,15 +19,15 @@ public class MinibotTryouts extends LinearOpMode {
     }
 
     // Declare OpMode members.
-    private ElapsedTime runtime = new ElapsedTime();
+    private final ElapsedTime runtime = new ElapsedTime();
 
-    private MotorInfo[] wheelInfo = {
+    private final MotorInfo[] wheelInfo = {
         new MotorInfo("leftFront", DcMotor.Direction.FORWARD),
         new MotorInfo("rightFront", DcMotor.Direction.FORWARD),
         new MotorInfo("leftBack", DcMotor.Direction.FORWARD),
         new MotorInfo("rightBack", DcMotor.Direction.FORWARD),
     };
-    private DcMotor[] wheels = new DcMotor[wheelInfo.length];
+    private final DcMotor[] wheels = new DcMotor[wheelInfo.length];
 
     private void setWheelPower(double ...powers) {
         for (int i = 0; i < wheels.length; ++i) {
