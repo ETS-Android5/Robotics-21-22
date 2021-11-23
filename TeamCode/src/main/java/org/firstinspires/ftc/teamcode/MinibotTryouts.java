@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.robotcontroller.external.samples;
+package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -23,7 +23,7 @@ public class MinibotTryouts extends LinearOpMode {
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
 
-    private String[] wheelInfo = {
+    private MotorInfo[] wheelInfo = {
         new MotorInfo("leftFront", DcMotor.Direction.FORWARD),
         new MotorInfo("rightFront", DcMotor.Direction.FORWARD),
         new MotorInfo("leftBack", DcMotor.Direction.FORWARD),
@@ -31,9 +31,9 @@ public class MinibotTryouts extends LinearOpMode {
     };
     private DcMotor[] wheels = new DcMotor[wheelInfo.length];
 
-    private void setWheelPower(double powers...) {
+    private void setWheelPower(double ...powers) {
         for (int i = 0; i < wheels.length; ++i) {
-            wheels[i] = powers[i];
+            wheels[i].setPower(powers[i]);
         }
     }
 
@@ -43,8 +43,8 @@ public class MinibotTryouts extends LinearOpMode {
         telemetry.update();
 
         for (int i = 0; i < wheels.length; ++i) {
-            wheels[i] = hardwareMap.get(DcMotor.class, wheelInfo[i]);
-            wheels[i].setDirection(wheelInfo[i].direction)
+            wheels[i] = hardwareMap.get(DcMotor.class, wheelInfo[i].name);
+            wheels[i].setDirection(wheelInfo[i].direction);
         }
 
         // Wait for the game to start (driver presses PLAY)
