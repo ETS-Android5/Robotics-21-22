@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@TeleOp(name="Minibots tryout code", group="tryouts")
+@TeleOp(name="Minibot tryout code", group="tryouts")
 public class MinibotTryouts extends LinearOpMode {
 
     private static class MotorInfo {
