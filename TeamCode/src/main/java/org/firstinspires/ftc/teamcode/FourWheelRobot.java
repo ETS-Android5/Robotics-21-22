@@ -1,14 +1,20 @@
 package org.firstinspires.ftc.teamcode;
 
+import javax.vecmath.GMatrix;
+
 public class FourWheelRobot {
     // Declare members
     public final HwMap hardwareMap;
 
     // Declare motors
     public final DcMotor leftFront;
-    public final DcMotor leftRear;
     public final DcMotor rightFront;
+    public final DcMotor leftRear;
     public final DcMotor rightRear;
+
+    // Stores wheel motor fields in row major order
+    // (when looking at wheel positions like a matrix)
+    public final DcMotor[] wheels;
 
     private DcMotor getWheel(
         String motorName,
@@ -28,12 +34,34 @@ public class FourWheelRobot {
 
         // Initialize wheels
         leftFront = getWheel("leftFront", DcMotorSimple.Direction.FORWARD);
-        leftRear = getWheel("leftRear", DcMotorSimple.Direction.FORWARD);
         rightFront = getWheel("rightFront", DcMotorSimple.Direction.FORWARD);
+        leftRear = getWheel("leftRear", DcMotorSimple.Direction.FORWARD);
         rightRear = getWheel("rightRear", DcMotorSimple.Direction.FORWARD);
+
+        wheels = new DcMotor[] {leftFront, rightFront, leftRear, rightRear};
     }
 
     // Robot utility methods
+
+    // This method sets the power of the wheel motors
+    // to the powers specified.
+    // The array specifies powers in row major order
+    // (when looking at robot wheels like a matrix).
+    public FourWheelRobot setWheelPowers(double ...powers) {
+        for (int i = 0; i < wheels.length; ++i) {
+            wheels[i].setPower(powers[i]);
+        }
+        return this;
+    }
+    // Same method as above, but takes a matrix
+    // instead of an array of powers.
+    public FourWheelRobot setWheelPowers(GMatrix matrix) {
+        leftFront.setPower(matrix.getElement(0, 0));
+        rightFront.setPower(matrix.getElement(0, 1));
+        leftRear.setPower(matrix.getElement(1, 0));
+        rightRear.setPower(matrix.getElement(1, 1));
+        return this;
+    }
 
     /* This method takes two power values, a px and py, and linearly translates the robot
      * with the power direction indicated by these values.
