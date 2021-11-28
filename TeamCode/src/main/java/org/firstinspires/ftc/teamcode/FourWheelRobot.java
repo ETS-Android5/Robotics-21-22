@@ -73,7 +73,22 @@ public class FourWheelRobot {
      * The method returns "this", so that the user can chain together commands.
      */
     public FourWheelRobot translate(double px, double py) {
+        // Check for NaN
+        if (Double.isNaN(px) || Double.isNaN(py)) {
+          throw new RuntimeException("You cannot supply NaN into the translate function.");
+        }
 
+        // Calculate values
+        double a = px + py;
+        double b = py - px;
+
+        // Set motor powers
+        leftFront.setPower(a);
+        rightFront.setPower(b);
+        leftRear.setPower(b);
+        rightRear.setPower(a);
+
+        return this;
     }
     public FourWheelRobot translate(Vector2d vector) {
         return translate(vector.x, vector.y);
@@ -98,6 +113,16 @@ public class FourWheelRobot {
      * If power is negative, robot rotates counterclockwise.
      */
     public FourWheelRobot rotate(double power) {
+        // Check for NaN
+        if (Double.isNaN(power)) {
+          throw new RuntimeException("You cannot supply NaN as power parameter into the rotate function.");
+        }
 
+        leftFront.setPower(power);
+        rightFront.setPower(-power);
+        leftRear.setPower(power);
+        rightRear.setPower(-power);
+
+        return this;
     }
 }
