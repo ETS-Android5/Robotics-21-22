@@ -1,10 +1,14 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.HardwareMap;
+
 import javax.vecmath.GMatrix;
 
 public class FourWheelRobot {
     // Declare members
-    public final HwMap hardwareMap;
+    public final HardwareMap hardwareMap;
 
     // Declare motors
     public final DcMotor leftFront;
@@ -18,18 +22,18 @@ public class FourWheelRobot {
 
     private DcMotor getWheel(
         String motorName,
-        DcMotorSimple.Direction direction,
+        DcMotorSimple.Direction direction
     ) {
         return RobotUtil.getDcMotor(
             hardwareMap,
             motorName,
             direction,
             DcMotor.ZeroPowerBehavior.FLOAT,
-            DcMotor.RunMode.WITH_ENCODER,
+            DcMotor.RunMode.RUN_USING_ENCODER
         );
     }
 
-    public FourWheelRobot(HwMap hardwareMap) {
+    public FourWheelRobot(HardwareMap hardwareMap) {
         this.hardwareMap = hardwareMap;
 
         // Initialize wheels
