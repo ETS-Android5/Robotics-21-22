@@ -11,7 +11,7 @@ public class CompetitionTeleOp extends LinearOpMode {
     // Declare members
     private final FourWheelRobot robot;
 
-    public ExampleTeleOp() {
+    public CompetitionTeleOp() {
         super();
         robot = new FourWheelRobot(hardwareMap);
     }
