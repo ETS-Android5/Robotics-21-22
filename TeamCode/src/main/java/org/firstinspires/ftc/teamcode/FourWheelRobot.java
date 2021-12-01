@@ -41,9 +41,9 @@ public class FourWheelRobot {
 
         // Initialize wheels
         leftFront = getWheel("leftFront", DcMotorSimple.Direction.FORWARD);
-        rightFront = getWheel("rightFront", DcMotorSimple.Direction.FORWARD);
-        leftRear = getWheel("leftRear", DcMotorSimple.Direction.FORWARD);
-        rightRear = getWheel("rightRear", DcMotorSimple.Direction.FORWARD);
+        rightFront = getWheel("rightFront", DcMotorSimple.Direction.REVERSE);
+        leftRear = getWheel("leftRear", DcMotorSimple.Direction.REVERSE);
+        rightRear = getWheel("rightRear", DcMotorSimple.Direction.REVERSE);
 
         wheels = new DcMotor[] {leftFront, rightFront, leftRear, rightRear};
     }
