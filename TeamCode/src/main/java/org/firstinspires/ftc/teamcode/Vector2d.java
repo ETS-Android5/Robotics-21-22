@@ -1,12 +1,22 @@
 package org.firstinspires.ftc.teamcode;
 
-public class Vector2d extends javax.vecmath.Vector2d {
+// This class used to use vecmath.Vector2d by extending it,
+// but since the vecmath package was having trouble integrating into
+// the robotics code build environment, vecmath was just removed instead.
+
+public class Vector2d /* extends javax.vecmath.Vector2d */ {
+    public double x;
+    public double y;
+
+    public void set(double x, double y) {
+        this.x = x;
+        this.y = y;
+    }
 
     public Vector2d() {
-        super();
     }
     public Vector2d(double x, double y) {
-        super(x, y);
+        set(x, y);
     }
 
     // Static helper functions

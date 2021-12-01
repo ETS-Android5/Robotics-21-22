@@ -4,8 +4,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import javax.vecmath.GMatrix;
-
 public class FourWheelRobot {
     // Declare members
     public final HardwareMap hardwareMap;
@@ -55,15 +53,6 @@ public class FourWheelRobot {
         for (int i = 0; i < wheels.length; ++i) {
             wheels[i].setPower(powers[i]);
         }
-        return this;
-    }
-    // Same method as above, but takes a matrix
-    // instead of an array of powers.
-    public FourWheelRobot setWheelPowers(GMatrix matrix) {
-        leftFront.setPower(matrix.getElement(0, 0));
-        rightFront.setPower(matrix.getElement(0, 1));
-        leftRear.setPower(matrix.getElement(1, 0));
-        rightRear.setPower(matrix.getElement(1, 1));
         return this;
     }
 
