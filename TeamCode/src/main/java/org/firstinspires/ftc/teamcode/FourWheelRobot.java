@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
+import java.util.Objects;
+
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -32,7 +34,10 @@ public class FourWheelRobot {
     }
 
     public FourWheelRobot(HardwareMap hardwareMap) {
-        this.hardwareMap = hardwareMap;
+        this.hardwareMap = Objects.requireNonNull(
+            hardwareMap,
+            "FourWheelRobot was supplied null in its constructor, as an argument for hardwareMap. This is not allowed."
+        );
 
         // Initialize wheels
         leftFront = getWheel("leftFront", DcMotorSimple.Direction.FORWARD);

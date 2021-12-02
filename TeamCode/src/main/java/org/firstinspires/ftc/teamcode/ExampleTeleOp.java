@@ -7,15 +7,12 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 public class ExampleTeleOp extends LinearOpMode {
 
     // Declare members
-    private final FourWheelRobot robot;
-
-    public ExampleTeleOp() {
-        super();
-        robot = new FourWheelRobot(hardwareMap);
-    }
+    private FourWheelRobot robot;
 
     @Override
     public void runOpMode() {
+        robot = new FourWheelRobot(hardwareMap);
+
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
