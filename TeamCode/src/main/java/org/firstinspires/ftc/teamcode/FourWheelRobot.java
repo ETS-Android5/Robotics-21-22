@@ -61,6 +61,15 @@ public class FourWheelRobot {
         return this;
     }
 
+    // Reset all hardware on the robot.
+    // Call this method to initialize the robot
+    // before you use it.
+    public void reset() {
+        for (DcMotor wheel : wheels) {
+            wheel.setPower(0);
+        }
+    }
+
     /* This method takes two power values, a px and py, and linearly translates the robot
      * with the power direction indicated by these values.
      * Imagine the robot on the origin of a coordinate plane, with the front facing positive y.

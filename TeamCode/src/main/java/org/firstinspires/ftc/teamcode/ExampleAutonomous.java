@@ -12,6 +12,7 @@ public class ExampleAutonomous extends LinearOpMode {
     @Override
     public void runOpMode() {
         robot = new FourWheelRobot(hardwareMap);
+        robot.reset();
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
