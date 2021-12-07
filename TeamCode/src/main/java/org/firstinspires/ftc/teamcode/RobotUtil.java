@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.CRServo;
 
 public class RobotUtil {
 
@@ -32,6 +33,18 @@ public class RobotUtil {
         Servo.Direction direction
     ) {
         Servo servo = hardwareMap.get(Servo.class, servoName);
+        servo.resetDeviceConfigurationForOpMode();
+        servo.setDirection(direction);
+        return servo;
+    }
+
+    // This function gets, resets, and initializes a CR Servo.
+    public static CRServo getCRServo(
+        HardwareMap hardwareMap,
+        String CRServoName,
+        DcMotorSimple.Direction direction,
+    ) {
+        CRServo servo = hardwareMap.get(CRServo.class, CRServoName);
         servo.resetDeviceConfigurationForOpMode();
         servo.setDirection(direction);
         return servo;
