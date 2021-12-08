@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.Servo;
 
 // This class is a TeleOp for experimenting different things.
 
@@ -10,11 +11,24 @@ public class ExperimentingTeleOp extends LinearOpMode {
 
     // Declare members
     private FourWheelRobot robot;
+    private Servo clawLeft;
+    private Servo clawRight;
 
     @Override
     public void runOpMode() {
         robot = new FourWheelRobot(hardwareMap);
         robot.reset();
+
+        clawLeft = RobotUtil.getServo(
+            hardwareMap,
+            "clawLeft",
+            Servo.Direction.REVERSE
+        );
+        clawRight = RobotUtil.getServo(
+            hardwareMap,
+            "clawRight",
+            Servo.Direction.FORWARD
+        );
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
@@ -53,6 +67,15 @@ public class ExperimentingTeleOp extends LinearOpMode {
         }
     }
 
+    private void openClaws() {
+        clawLeft.setPosition(0.5);
+        clawRight.setPosition(0.5);
+    }
+    private void closeClaws() {
+        clawLeft.setPosition(1.0);
+        clawRight.setPosition(1.0);
+    }
+
     private void configA() {
         if (GamepadUtil.leftTriggerPressed(gamepad1)) {
             robot.rotate(-0.5);
@@ -72,6 +95,9 @@ public class ExperimentingTeleOp extends LinearOpMode {
         else {
             robot.translate(gamepad1.left_stick_x, -1*gamepad1.left_stick_y);
         }
+
+        if (GamepadUtil.leftTriggerPressed(gamepad1)) openClaws();
+        else if (GamepadUtil.rightTriggerPressed(gamepad1)) closeClaws();
     }
 
     private void configX() {
