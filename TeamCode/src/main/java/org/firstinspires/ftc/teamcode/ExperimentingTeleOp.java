@@ -2,7 +2,9 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 // This class is a TeleOp for experimenting different things.
 
@@ -11,8 +13,12 @@ public class ExperimentingTeleOp extends LinearOpMode {
 
     // Declare members
     private FourWheelRobot robot;
+
     private Servo clawLeft;
     private Servo clawRight;
+
+    private DcMotor armLeft;
+    private DcMotor armRight;
 
     @Override
     public void runOpMode() {
@@ -30,6 +36,21 @@ public class ExperimentingTeleOp extends LinearOpMode {
             Servo.Direction.FORWARD
         );
 
+        armLeft = RobotUtil.getDcMotor(
+            hardwareMap,
+            "armLeft",
+            DcMotorSimple.Direction.FORWARD,
+            DcMotor.ZeroPowerBehavior.BRAKE,
+            DcMotor.RunMode.RUN_USING_ENCODER
+        );
+        armRight = RobotUtil.getDcMotor(
+            hardwareMap,
+            "armRight",
+            DcMotorSimple.Direction.FORWARD,
+            DcMotor.ZeroPowerBehavior.BRAKE,
+            DcMotor.RunMode.RUN_USING_ENCODER
+        );
+
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
@@ -38,6 +59,8 @@ public class ExperimentingTeleOp extends LinearOpMode {
 
         // Default is config a
         char controllerConfig = 'a';
+
+        initArm();
 
         while (opModeIsActive()) {
             // Controller loop
@@ -74,6 +97,29 @@ public class ExperimentingTeleOp extends LinearOpMode {
     private void closeClaws() {
         clawLeft.setPosition(1.0);
         clawRight.setPosition(1.0);
+    }
+
+    private int armPosition;
+    private final int maxArmPos = 400;
+    private final int minArmPos = 0;
+
+    private void initArm() {
+        setArmPosition(minArmPos);
+        armLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//        armRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        armLeft.setPower(0.5);
+        // armRight.setPower(0.5);
+    }
+    private void setArmPosition(int ticks) {
+        // Clamp arm position between min and max.
+        ticks = Math.max(minArmPos, Math.min(ticks, maxArmPos));
+
+        armLeft.setTargetPosition(ticks);
+        // armRight.setTargetPosition(ticks);
+        armPosition = ticks;
+    }
+    private void shiftArmPosition(int dTicks) {
+        setArmPosition(armPosition + dTicks);
     }
 
     private void configA() {
