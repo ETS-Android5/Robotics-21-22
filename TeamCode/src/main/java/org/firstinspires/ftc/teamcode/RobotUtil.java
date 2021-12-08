@@ -42,7 +42,7 @@ public class RobotUtil {
     public static CRServo getCRServo(
         HardwareMap hardwareMap,
         String CRServoName,
-        DcMotorSimple.Direction direction,
+        DcMotorSimple.Direction direction
     ) {
         CRServo servo = hardwareMap.get(CRServo.class, CRServoName);
         servo.resetDeviceConfigurationForOpMode();
