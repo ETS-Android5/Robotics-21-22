@@ -39,7 +39,7 @@ public class ExperimentingTeleOp extends LinearOpMode {
         armLeft = RobotUtil.getDcMotor(
             hardwareMap,
             "armLeft",
-            DcMotorSimple.Direction.FORWARD,
+            DcMotorSimple.Direction.REVERSE,
             DcMotor.ZeroPowerBehavior.BRAKE,
             DcMotor.RunMode.RUN_USING_ENCODER
         );
@@ -99,26 +99,27 @@ public class ExperimentingTeleOp extends LinearOpMode {
         clawRight.setPosition(1.0);
     }
 
-    private int armPosition;
-    private final int maxArmPos = 400;
-    private final int minArmPos = 0;
+    private double armPosition;
+    private final double maxArmPos = 100.0;
+    private final double minArmPos = 0.0;
 
     private void initArm() {
         setArmPosition(minArmPos);
         armLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//        armRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        armRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         armLeft.setPower(0.5);
-        // armRight.setPower(0.5);
+        armRight.setPower(0.5);
     }
-    private void setArmPosition(int ticks) {
+    private void setArmPosition(double ticks) {
         // Clamp arm position between min and max.
         ticks = Math.max(minArmPos, Math.min(ticks, maxArmPos));
 
-        armLeft.setTargetPosition(ticks);
-        // armRight.setTargetPosition(ticks);
+        int output = (int) Math.round(ticks);
+        armLeft.setTargetPosition(output);
+        armRight.setTargetPosition(output);
         armPosition = ticks;
     }
-    private void shiftArmPosition(int dTicks) {
+    private void shiftArmPosition(double dTicks) {
         setArmPosition(armPosition + dTicks);
     }
 
@@ -144,6 +145,8 @@ public class ExperimentingTeleOp extends LinearOpMode {
 
         if (GamepadUtil.leftTriggerPressed(gamepad1)) openClaws();
         else if (GamepadUtil.rightTriggerPressed(gamepad1)) closeClaws();
+
+        setArmPosition(1.0);
     }
 
     private void configX() {
