@@ -78,6 +78,8 @@ public class FourWheelRobot {
      * in the real world as in a coordinate plane (negative x means left, positive y means forward, etc.).
      *
      * The method returns "this", so that the user can chain together commands.
+     * 
+     * Disregard notes above. Hastily patched this function to work for non-mechanum wheel robots.
      */
     public FourWheelRobot translate(double px, double py) {
         // Check for NaN
@@ -86,14 +88,14 @@ public class FourWheelRobot {
         }
 
         // Calculate values
-        double a = px + py;
-        double b = py - px;
+        // double a = px + py;
+        // double b = py - px;
 
         // Set motor powers
-        leftFront.setPower(a);
-        rightFront.setPower(b);
-        leftRear.setPower(b);
-        rightRear.setPower(a);
+        leftFront.setPower(py);
+        rightFront.setPower(py);
+        leftRear.setPower(py);
+        rightRear.setPower(py);
 
         return this;
     }
