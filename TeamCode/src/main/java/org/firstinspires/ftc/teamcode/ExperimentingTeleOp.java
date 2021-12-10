@@ -112,7 +112,7 @@ public class ExperimentingTeleOp extends LinearOpMode {
     }
     private void setArmPosition(double ticks) {
         // Clamp arm position between min and max.
-        ticks = Math.max(minArmPos, Math.min(ticks, maxArmPos));
+        // ticks = Math.max(minArmPos, Math.min(ticks, maxArmPos));
 
         int output = (int) Math.round(ticks);
         armLeft.setTargetPosition(output);
@@ -146,7 +146,10 @@ public class ExperimentingTeleOp extends LinearOpMode {
         if (GamepadUtil.leftTriggerPressed(gamepad1)) openClaws();
         else if (GamepadUtil.rightTriggerPressed(gamepad1)) closeClaws();
 
-        setArmPosition(1.0);
+        telemetry.addData("Status", Integer.toString(armLeft.getCurrentPosition()));
+        telemetry.update();
+
+//        setArmPosition(armLeft.getCurrentPosition());
     }
 
     private void configX() {
