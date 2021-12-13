@@ -63,8 +63,11 @@ class FourWheelRobot(hardwareMap: HardwareMap) {
      */
     fun translate(px: Double, py: Double): FourWheelRobot {
         // Check for NaN
-        if (java.lang.Double.isNaN(px) || java.lang.Double.isNaN(py)) {
+        if (Double.isNaN(px) || Double.isNaN(py)) {
             throw Exception("You cannot supply NaN into the translate function.")
+        }
+        if (px.isNaN() || py.isNaN()) {
+            throw IllegalArgumentException("You cannot supply NaN into the translate function.")
         }
 
         // Calculate values
