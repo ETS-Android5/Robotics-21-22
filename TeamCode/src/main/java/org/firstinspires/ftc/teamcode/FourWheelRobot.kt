@@ -1,22 +1,13 @@
 package org.firstinspires.ftc.teamcode
 
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
-import org.firstinspires.ftc.teamcode.FourWheelRobot
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp
-import org.firstinspires.ftc.teamcode.GamepadUtil
 import com.qualcomm.robotcore.hardware.HardwareMap
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorSimple
-import org.firstinspires.ftc.teamcode.RobotUtil
-import org.firstinspires.ftc.teamcode.Vector2d
-import com.qualcomm.robotcore.hardware.Gamepad
 import java.lang.RuntimeException
-import java.util.*
 
-class FourWheelRobot(hardwareMap: HardwareMap?) {
+class FourWheelRobot(hardwareMap: HardwareMap) {
     // Declare members
-    val hardwareMap: HardwareMap
+    val hardwareMap = hardwareMap
 
     // Declare motors
     val leftFront: DcMotor
@@ -29,7 +20,7 @@ class FourWheelRobot(hardwareMap: HardwareMap?) {
     val wheels: Array<DcMotor>
     private fun getWheel(
             motorName: String,
-            direction: DcMotorSimple.Direction
+            direction: DcMotorSimple.Direction,
     ): DcMotor {
         return RobotUtil.getDcMotor(
                 hardwareMap,
@@ -73,7 +64,7 @@ class FourWheelRobot(hardwareMap: HardwareMap?) {
     fun translate(px: Double, py: Double): FourWheelRobot {
         // Check for NaN
         if (java.lang.Double.isNaN(px) || java.lang.Double.isNaN(py)) {
-            throw RuntimeException("You cannot supply NaN into the translate function.")
+            throw Exception("You cannot supply NaN into the translate function.")
         }
 
         // Calculate values
