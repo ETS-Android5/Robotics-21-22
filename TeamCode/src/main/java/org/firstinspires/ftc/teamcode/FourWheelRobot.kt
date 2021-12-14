@@ -3,31 +3,29 @@ package org.firstinspires.ftc.teamcode
 import com.qualcomm.robotcore.hardware.HardwareMap
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorSimple
-import java.lang.RuntimeException
 
 class FourWheelRobot(hardwareMap: HardwareMap) {
-    // Declare members
-    val hardwareMap = hardwareMap
 
-    // Declare motors
-    val leftFront: DcMotor
-    val rightFront: DcMotor
-    val leftRear: DcMotor
-    val rightRear: DcMotor
+    // Declare and initialize motors
+    val leftFront = getWheel("leftFront", DcMotorSimple.Direction.FORWARD)
+    val rightFront = getWheel("rightFront", DcMotorSimple.Direction.FORWARD)
+    val leftRear = getWheel("leftRear", DcMotorSimple.Direction.FORWARD)
+    val rightRear = getWheel("rightRear", DcMotorSimple.Direction.FORWARD)
 
     // Stores wheel motor fields in row major order
     // (when looking at wheel positions like a matrix)
-    val wheels: Array<DcMotor>
+    val wheels = listOf(leftFront, rightFront, leftRear, rightRear)
+
     private fun getWheel(
-            motorName: String,
-            direction: DcMotorSimple.Direction,
+        motorName: String,
+        direction: DcMotorSimple.Direction,
     ): DcMotor {
         return RobotUtil.getDcMotor(
-                hardwareMap,
-                motorName,
-                direction,
-                DcMotor.ZeroPowerBehavior.FLOAT,
-                DcMotor.RunMode.RUN_USING_ENCODER
+            hardwareMap,
+            motorName,
+            direction,
+            DcMotor.ZeroPowerBehavior.FLOAT,
+            DcMotor.RunMode.RUN_USING_ENCODER
         )
     }
 
@@ -63,12 +61,8 @@ class FourWheelRobot(hardwareMap: HardwareMap) {
      */
     fun translate(px: Double, py: Double): FourWheelRobot {
         // Check for NaN
-        if (Double.isNaN(px) || Double.isNaN(py)) {
-            throw Exception("You cannot supply NaN into the translate function.")
-        }
-        if (px.isNaN() || py.isNaN()) {
+        if (px.isNaN() || py.isNaN())
             throw IllegalArgumentException("You cannot supply NaN into the translate function.")
-        }
 
         // Calculate values
         val a = px + py
@@ -95,7 +89,7 @@ class FourWheelRobot(hardwareMap: HardwareMap) {
      */
     fun translatePolar(power: Double, direction: Double): FourWheelRobot {
         return translate(
-                Vector2d.construct(0.0, power).rotate(Math.toRadians(-1 * direction))
+            Vector2d.construct(0.0, power).rotate(Math.toRadians(-1 * direction))
         )
     }
 
@@ -107,9 +101,9 @@ class FourWheelRobot(hardwareMap: HardwareMap) {
      */
     fun rotate(power: Double): FourWheelRobot {
         // Check for NaN
-        if (java.lang.Double.isNaN(power)) {
-            throw RuntimeException("You cannot supply NaN as power parameter into the rotate function.")
-        }
+        if (power.isNaN())
+            throw IllegalArgumentException("You cannot supply NaN as power parameter into the rotate function.")
+
         leftFront.power = power
         rightFront.power = -power
         leftRear.power = power
@@ -117,17 +111,4 @@ class FourWheelRobot(hardwareMap: HardwareMap) {
         return this
     }
 
-    init {
-        this.hardwareMap = Objects.requireNonNull(
-                hardwareMap,
-                "FourWheelRobot was supplied null in its constructor, as an argument for hardwareMap. This is not allowed."
-        )
-
-        // Initialize wheels
-        leftFront = getWheel("leftFront", DcMotorSimple.Direction.FORWARD)
-        rightFront = getWheel("rightFront", DcMotorSimple.Direction.FORWARD)
-        leftRear = getWheel("leftRear", DcMotorSimple.Direction.FORWARD)
-        rightRear = getWheel("rightRear", DcMotorSimple.Direction.FORWARD)
-        wheels = arrayOf(leftFront, rightFront, leftRear, rightRear)
-    }
 }
