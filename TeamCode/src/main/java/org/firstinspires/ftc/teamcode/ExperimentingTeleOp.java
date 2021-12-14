@@ -77,14 +77,15 @@ public class ExperimentingTeleOp extends LinearOpMode {
     }
 
     private void configA() {
+        double scale = 0.5;
         if (GamepadUtil.leftTriggerPressed(gamepad1)) {
-            robot.rotate(-0.5);
+            robot.rotate(-0.5 * scale);
         }
         else if (GamepadUtil.rightTriggerPressed(gamepad1)) {
-            robot.rotate(0.5);
+            robot.rotate(0.5 * scale);
         }
         else {
-            robot.translate(gamepad1.right_stick_x, -1*gamepad1.left_stick_y);
+            robot.translate(gamepad1.right_stick_x * scale, -1*gamepad1.left_stick_y * scale);
         }
     }
 
