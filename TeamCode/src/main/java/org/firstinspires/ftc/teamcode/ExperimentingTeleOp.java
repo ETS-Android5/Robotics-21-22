@@ -68,11 +68,11 @@ public class ExperimentingTeleOp extends LinearOpMode {
     }
 
     private void openClaws() {
-        clawLeft.setPosition(0.5);
-        clawRight.setPosition(0.5);
+        clawLeft.setPosition(0.6);
+        clawRight.setPosition(0.75);
     }
     private void closeClaws() {
-        clawLeft.setPosition(1.0);
+        clawLeft.setPosition(0.85);
         clawRight.setPosition(1.0);
     }
 
