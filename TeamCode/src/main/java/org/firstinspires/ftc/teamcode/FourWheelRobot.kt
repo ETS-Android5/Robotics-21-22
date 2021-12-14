@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorSimple
 
-class FourWheelRobot(hardwareMap: HardwareMap) {
+class FourWheelRobot(val hardwareMap: HardwareMap) {
 
     // Declare and initialize motors
     val leftFront = getWheel("leftFront", DcMotorSimple.Direction.FORWARD)
@@ -16,18 +16,16 @@ class FourWheelRobot(hardwareMap: HardwareMap) {
     // (when looking at wheel positions like a matrix)
     val wheels = listOf(leftFront, rightFront, leftRear, rightRear)
 
-    private fun getWheel(
+    private inline fun getWheel(
         motorName: String,
         direction: DcMotorSimple.Direction,
-    ): DcMotor {
-        return RobotUtil.getDcMotor(
-            hardwareMap,
-            motorName,
-            direction,
-            DcMotor.ZeroPowerBehavior.FLOAT,
-            DcMotor.RunMode.RUN_USING_ENCODER
-        )
-    }
+    ): DcMotor = RobotUtil.getDcMotor(
+        hardwareMap,
+        motorName,
+        direction,
+        DcMotor.ZeroPowerBehavior.FLOAT,
+        DcMotor.RunMode.RUN_USING_ENCODER,
+    )
 
     // Robot utility methods
     // This method sets the power of the wheel motors
@@ -35,8 +33,8 @@ class FourWheelRobot(hardwareMap: HardwareMap) {
     // The array specifies powers in row major order
     // (when looking at robot wheels like a matrix).
     fun setWheelPowers(vararg powers: Double): FourWheelRobot {
-        for (i in wheels.indices) {
-            wheels[i].power = powers[i]
+        for ((power, wheel) in powers zip wheels) {
+            wheel.power = power
         }
         return this
     }
