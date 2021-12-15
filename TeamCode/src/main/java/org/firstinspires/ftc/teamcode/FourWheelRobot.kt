@@ -73,9 +73,7 @@ class FourWheelRobot(val hardwareMap: HardwareMap) {
         return this
     }
 
-    fun translate(vector: Vector2d): FourWheelRobot {
-        return translate(vector.x, vector.y)
-    }
+    fun translate(vector: Vector2d) = translate(vector.x, vector.y)
 
     /* This method is like the translate method except it takes a power value
      * and an angle (in degrees).
@@ -84,11 +82,10 @@ class FourWheelRobot(val hardwareMap: HardwareMap) {
      * An angle of 0 means forward. Positive is clockwise, negative is counterclockwise.
      * Power can be negative. In that case, robot will go in opposite direction.
      */
-    fun translatePolar(power: Double, direction: Double): FourWheelRobot {
-        return translate(
-            Vector2d.construct(0.0, power).rotate(Math.toRadians(-1 * direction))
-        )
-    }
+    init TODO("Test if Math.toRadians is something in kotlin")
+    fun translatePolar(power: Double, direction: Double) = translate(
+        Vector2d(0.0, power).rotate(Math.toRadians(-1 * direction))
+    )
 
     /* This method takes one power value and rotates the robot
      * with the power and direction specified by the value.

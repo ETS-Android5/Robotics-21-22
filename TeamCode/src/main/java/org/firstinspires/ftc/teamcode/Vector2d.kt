@@ -14,6 +14,7 @@ data class Vector2d(val x: Double = 0.0, val y: Double = 0.0) {
         // Static helper functions
         // This will probably generate a syntax error, cause I think "this" here
         // refers to the companion object, not the Vector2d constructor.
+        TODO("Testing stuff below as described above")
         // This function allows you to get a vector using polar coordinates
         // instead of cartesian coordinates.
         fun polar(r: Double, theta: Double) = this(r, 0.0).rotate(theta)

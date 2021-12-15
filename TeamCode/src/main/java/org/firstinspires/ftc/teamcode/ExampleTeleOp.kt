@@ -1,24 +1,20 @@
 package org.firstinspires.ftc.teamcode
 
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
-import org.firstinspires.ftc.teamcode.FourWheelRobot
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
-import org.firstinspires.ftc.teamcode.GamepadUtil
-import com.qualcomm.robotcore.hardware.HardwareMap
-import com.qualcomm.robotcore.hardware.DcMotor
-import com.qualcomm.robotcore.hardware.DcMotorSimple
-import org.firstinspires.ftc.teamcode.RobotUtil
-import org.firstinspires.ftc.teamcode.Vector2d
-import com.qualcomm.robotcore.hardware.Gamepad
 
 @TeleOp(name = "Example TeleOp", group = "Example Group")
-class ExampleTeleOp : LinearOpMode() {
+// Test, this will probably cause a syntax error cause
+// you need to explicitly construct the baseclass one place or another
+class ExampleTeleOp : LinearOpMode {
+    init TODO("Testing if above works")
     // Declare members
-    private var robot: FourWheelRobot? = null
+    private lateinit var robot: FourWheelRobot
+
     override fun runOpMode() {
         robot = FourWheelRobot(hardwareMap)
-        robot!!.reset()
+        robot.reset()
+
         telemetry.addData("Status", "Initialized")
         telemetry.update()
 
@@ -26,13 +22,12 @@ class ExampleTeleOp : LinearOpMode() {
         waitForStart()
         while (opModeIsActive()) {
             // Controller loop
-            if (GamepadUtil.leftTriggerPressed(gamepad1)) {
-                robot!!.rotate(-0.5)
-            } else if (GamepadUtil.rightTriggerPressed(gamepad1)) {
-                robot!!.rotate(0.5)
-            } else {
-                robot!!.rotate(0.0)
-            }
+            TODO("Another test for if the . operator without stuff on left works")
+            robot.rotate(when (gamepad1) {
+                .leftTriggerPressed() -> -0.5
+                .rightTriggerPressed() -> 0.5
+                else -> 0.0
+            })
         }
     }
 }
