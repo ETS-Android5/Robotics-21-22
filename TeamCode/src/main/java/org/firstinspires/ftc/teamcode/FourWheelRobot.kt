@@ -19,8 +19,7 @@ class FourWheelRobot(val hardwareMap: HardwareMap) {
     private inline fun getWheel(
         motorName: String,
         direction: DcMotorSimple.Direction,
-    ): DcMotor = RobotUtil.getDcMotor(
-        hardwareMap,
+    ): DcMotor = hardwareMap.getDcMotor(
         motorName,
         direction,
         DcMotor.ZeroPowerBehavior.FLOAT,
