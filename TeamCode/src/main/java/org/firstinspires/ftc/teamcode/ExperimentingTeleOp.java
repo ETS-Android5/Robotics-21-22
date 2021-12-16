@@ -100,7 +100,8 @@ public class ExperimentingTeleOp extends LinearOpMode {
     }
 
     // Tunable parameters
-    private final int[] armLeftBounds = {783, 284}; // {lower, upper}
+    // Each set of bounds = {lower (lowest position), upper (highest position)}
+    private final int[] armLeftBounds = {783, 284};
     private final int[] armRightBounds = {506, -2};
     private final double armInitialPosition = 0.0;
 
@@ -113,6 +114,9 @@ public class ExperimentingTeleOp extends LinearOpMode {
         armLeft.setPower(0.5);
         armRight.setPower(0.5);
     }
+    // Set arm position.
+    // Parameter is a position value between (and including) 0.0 and 1.0.
+    // 0.0 is arm's lowest position, 1.0 is arm's highest position.
     private void setArmPosition(double position) {
         // Clamp arm position between 0.0 and 1.0.
         position = Math.max(0.0, Math.min(1.0, position));
@@ -131,8 +135,18 @@ public class ExperimentingTeleOp extends LinearOpMode {
 
         armPosition = position;
     }
+    // Shift arm position by some value.
+    // Positive value moves arm up,
+    // negative value moves arm down.
     private void shiftArmPosition(double dPosition) {
         setArmPosition(armPosition + dPosition);
+    }
+
+    private void defaultArmControl() {
+        if (gamepad1.dpad_up)
+            shiftArmPosition(0.002);
+        else if (gamepad1.dpad_down)
+            shiftArmPosition(-0.002);
     }
 
     private void configA() {
@@ -146,6 +160,8 @@ public class ExperimentingTeleOp extends LinearOpMode {
         else {
             robot.translate(gamepad1.right_stick_x * scale, -1*gamepad1.left_stick_y * scale);
         }
+
+        defaultArmControl();
     }
 
     private void configB() {
@@ -159,7 +175,7 @@ public class ExperimentingTeleOp extends LinearOpMode {
         if (GamepadUtil.leftTriggerPressed(gamepad1)) openClaws();
         else if (GamepadUtil.rightTriggerPressed(gamepad1)) closeClaws();
 
-        shiftArmPosition(0.002);
+        defaultArmControl();
     }
 
     private void configX() {
