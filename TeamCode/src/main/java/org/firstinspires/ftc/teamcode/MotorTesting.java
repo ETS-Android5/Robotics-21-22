@@ -26,14 +26,14 @@ public class MotorTesting extends LinearOpMode {
             hardwareMap,
             "armLeft",
             DcMotorSimple.Direction.REVERSE,
-            DcMotor.ZeroPowerBehavior.BRAKE,
+            DcMotor.ZeroPowerBehavior.FLOAT,
             DcMotor.RunMode.RUN_USING_ENCODER
         );
         armRight = RobotUtil.getDcMotor(
             hardwareMap,
             "armRight",
             DcMotorSimple.Direction.FORWARD,
-            DcMotor.ZeroPowerBehavior.BRAKE,
+            DcMotor.ZeroPowerBehavior.FLOAT,
             DcMotor.RunMode.RUN_USING_ENCODER
         );
 
