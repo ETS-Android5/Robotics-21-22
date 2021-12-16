@@ -99,28 +99,40 @@ public class ExperimentingTeleOp extends LinearOpMode {
         clawRight.setPosition(1.5);
     }
 
+    // Tunable parameters
+    private final int[] armLeftBounds = {783, 284}; // {lower, upper}
+    private final int[] armRightBounds = {506, -2};
+    private final double armInitialPosition = 0.0;
+
     private double armPosition;
-    private final double maxArmPos = 100.0;
-    private final double minArmPos = 0.0;
 
     private void initArm() {
-        setArmPosition(minArmPos);
+        setArmPosition(armInitialPosition);
         armLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         armRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         armLeft.setPower(0.5);
         armRight.setPower(0.5);
     }
-    private void setArmPosition(double ticks) {
-        // Clamp arm position between min and max.
-        ticks = Math.max(minArmPos, Math.min(ticks, maxArmPos));
+    private void setArmPosition(double position) {
+        // Clamp arm position between 0.0 and 1.0.
+        position = Math.max(0.0, Math.min(1.0, position));
 
-        int output = (int) Math.round(ticks);
-        armLeft.setTargetPosition(output);
-        armRight.setTargetPosition(output);
-        armPosition = ticks;
+        // Compute outputs based on supplied position and arm bounds.
+        int[] outputs = {0, 0}; // {left_output, right_output}
+        int[][] armBounds = {armLeftBounds, armRightBounds};
+        for (int i = 0; i < armBounds.length; ++i) {
+            outputs[i] = (int) Math.round(
+                armBounds[i][0] + position*(armBounds[i][1] - armBounds[i][0])
+            );
+        }
+
+        armLeft.setTargetPosition(outputs[0]);
+        armRight.setTargetPosition(outputs[1]);
+
+        armPosition = position;
     }
-    private void shiftArmPosition(double dTicks) {
-        setArmPosition(armPosition + dTicks);
+    private void shiftArmPosition(double dPosition) {
+        setArmPosition(armPosition + dPosition);
     }
 
     private void configA() {
@@ -147,7 +159,7 @@ public class ExperimentingTeleOp extends LinearOpMode {
         if (GamepadUtil.leftTriggerPressed(gamepad1)) openClaws();
         else if (GamepadUtil.rightTriggerPressed(gamepad1)) closeClaws();
 
-        shiftArmPosition(1);
+        shiftArmPosition(0.002);
     }
 
     private void configX() {
