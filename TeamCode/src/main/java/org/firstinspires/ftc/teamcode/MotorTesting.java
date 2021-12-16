@@ -6,10 +6,10 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-// Arm tester
+// Motor and arm tester
 
-@TeleOp(name="Arm Tester", group="Dev")
-public class ArmTesting extends LinearOpMode {
+@TeleOp(name="Motor Tester", group="Dev")
+public class MotorTesting extends LinearOpMode {
 
     // Declare members
     private FourWheelRobot robot;
@@ -46,6 +46,7 @@ public class ArmTesting extends LinearOpMode {
         while (opModeIsActive()) {
             telemetry.addData("arm left", armLeft.getCurrentPosition());
             telemetry.addData("arm right", armRight.getCurrentPosition());
+            telemetry.addData("left front wheel", robot.leftFront.getCurrentPosition());
             telemetry.addData("left trigger", gamepad1.left_trigger);
             telemetry.update();
         }
