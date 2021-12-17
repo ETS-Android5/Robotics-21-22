@@ -92,17 +92,19 @@ public class ExperimentingTeleOp extends LinearOpMode {
 
     private void openClaws() {
         clawLeft.setPosition(0.7);
-        clawRight.setPosition(0.85);
+        clawRight.setPosition(0.3);
     }
     private void closeClaws() {
         clawLeft.setPosition(0.85);
-        clawRight.setPosition(1.5);
+        clawRight.setPosition(0.45);
     }
 
     // Tunable parameters
     // Each set of bounds = {lower (lowest position), upper (highest position)}
     private final int[] armLeftBounds = {783, 284};
     private final int[] armRightBounds = {506, -2};
+    private final double armMinPosition = 0.0;
+    private final double armMaxPosition = 1.0;
     private final double armInitialPosition = 0.0;
 
     private double armPosition;
@@ -111,8 +113,8 @@ public class ExperimentingTeleOp extends LinearOpMode {
         setArmPosition(armInitialPosition);
         armLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         armRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        armLeft.setPower(0.5);
-        armRight.setPower(0.5);
+        armLeft.setPower(0.3);
+        armRight.setPower(0.3);
     }
     // Set arm position.
     // Parameter is a position value between (and including) 0.0 and 1.0.

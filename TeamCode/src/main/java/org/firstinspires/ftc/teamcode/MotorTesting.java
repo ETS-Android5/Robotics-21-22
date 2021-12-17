@@ -17,6 +17,9 @@ public class MotorTesting extends LinearOpMode {
     private DcMotor armLeft;
     private DcMotor armRight;
 
+    private Servo clawLeft;
+    private Servo clawRight;
+
     @Override
     public void runOpMode() {
         robot = new FourWheelRobot(hardwareMap);
@@ -37,6 +40,17 @@ public class MotorTesting extends LinearOpMode {
             DcMotor.RunMode.RUN_USING_ENCODER
         );
 
+        clawLeft = RobotUtil.getServo(
+                hardwareMap,
+                "clawLeft",
+                Servo.Direction.REVERSE
+        );
+        clawRight = RobotUtil.getServo(
+                hardwareMap,
+                "clawRight",
+                Servo.Direction.FORWARD
+        );
+
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
@@ -44,10 +58,22 @@ public class MotorTesting extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive()) {
+            if (gamepad1.a) {
+                clawLeft.setPosition(0.0);
+                clawRight.setPosition(0.0);
+            }
+            else if (gamepad1.b) {
+                clawLeft.setPosition(1.0);
+                clawRight.setPosition(1.0);
+            }
+
             telemetry.addData("arm left", armLeft.getCurrentPosition());
             telemetry.addData("arm right", armRight.getCurrentPosition());
             telemetry.addData("left front wheel", robot.leftFront.getCurrentPosition());
             telemetry.addData("left trigger", gamepad1.left_trigger);
+
+            telemetry.addData("left claw", clawLeft.getPosition());
+            telemetry.addData("right claw", clawRight.getPosition());
             telemetry.update();
         }
     }
