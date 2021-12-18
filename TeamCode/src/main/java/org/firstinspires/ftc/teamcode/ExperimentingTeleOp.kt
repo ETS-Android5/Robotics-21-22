@@ -21,8 +21,9 @@ class ExperimentingTeleOp : LinearOpMode() {
         // Wait for the game to start (driver presses PLAY)
         waitForStart()
 
-        // Default is config a
-        var controllerConfig = 'a'
+        // Default is configA
+        TODO("Test")
+        var controlLayout = configA
 
         while (opModeIsActive()) {
             // Controller loop
@@ -30,19 +31,15 @@ class ExperimentingTeleOp : LinearOpMode() {
             // If any of the buttons on gamepad1 are pressed,
             // change the controller configuration to the one
             // assigned to that button.
-            controllerConfig = when {
-                gamepad1.a -> 'a'
-                gamepad1.b -> 'b'
-                gamepad1.x -> 'x'
-                gamepad1.y -> 'y'
-                else -> controllerConfig
+            controlLayout = when {
+                gamepad1.a -> configA
+                gamepad1.b -> configB
+                gamepad1.x -> configX
+                gamepad1.y -> configY
+                else -> controlLayout
             }
-            when (controllerConfig) {
-                'a' -> configA()
-                'b' -> configB()
-                'x' -> configX()
-                'y' -> configY()
-            }
+            
+            controlLayout();
         }
     }
 
