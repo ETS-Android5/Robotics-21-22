@@ -22,8 +22,7 @@ class ExperimentingTeleOp : LinearOpMode() {
         waitForStart()
 
         // Default is configA
-        TODO("Test")
-        var controlLayout = configA
+        var controlLayout = ::configA
 
         while (opModeIsActive()) {
             // Controller loop
@@ -32,14 +31,14 @@ class ExperimentingTeleOp : LinearOpMode() {
             // change the controller configuration to the one
             // assigned to that button.
             controlLayout = when {
-                gamepad1.a -> configA
-                gamepad1.b -> configB
-                gamepad1.x -> configX
-                gamepad1.y -> configY
+                gamepad1.a -> ::configA
+                gamepad1.b -> ::configB
+                gamepad1.x -> ::configX
+                gamepad1.y -> ::configY
                 else -> controlLayout
             }
             
-            controlLayout();
+            controlLayout()
         }
     }
 
