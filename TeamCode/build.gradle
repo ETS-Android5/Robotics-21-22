@@ -17,6 +17,10 @@ apply plugin: 'kotlin-android'
 apply from: '../build.dependencies.gradle'
 
 android {
+    compileSdkVersion 31
+    defaultConfig {
+        targetSdkVersion 31
+    }
     androidResources {
         noCompress 'tflite'
     }
