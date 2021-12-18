@@ -6,6 +6,7 @@ import kotlin.reflect.KProperty
 // This is a delegate that acts like a property with the
 // lateinit modifier, except it can only be written to once.
 // Basically it's like a lateinit property with val instead of var.
+// It's a constant that is initialized late.
 class LateInitConstProperty<T : Any> : ReadWriteProperty<Any?, T> {
     
     private var value: T? = null
