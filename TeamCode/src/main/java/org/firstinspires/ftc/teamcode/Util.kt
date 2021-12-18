@@ -24,3 +24,7 @@ class LateInitConstProperty<T : Any> : ReadWriteProperty<Any?, T> {
         )
     }
 }
+
+// An analog to python's pass keyword.
+// Is a function/lambda that does nothing.
+val pass = {}
