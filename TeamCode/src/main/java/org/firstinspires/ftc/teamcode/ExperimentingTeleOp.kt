@@ -68,7 +68,6 @@ class ExperimentingTeleOp : LinearOpMode() {
         }
     }
 
-    TEST()
-    private fun configX()
-    private fun configY()
+    private fun configX() {}
+    private fun configY() {}
 }
