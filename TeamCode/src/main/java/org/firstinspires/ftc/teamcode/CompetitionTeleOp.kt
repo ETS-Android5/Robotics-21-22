@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 @TeleOp(name = "Main TeleOp", group = "Main")
 class CompetitionTeleOp : LinearOpMode() {
     // Declare members
-    private lateinit var robot: FourWheelRobot
+    private var robot: FourWheelRobot by LateInitConstProperty()
 
     override fun runOpMode() {
         robot = FourWheelRobot(hardwareMap)

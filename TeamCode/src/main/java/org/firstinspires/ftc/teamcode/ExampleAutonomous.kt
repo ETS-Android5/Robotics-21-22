@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 @Autonomous(name = "Example Autonomous", group = "Example Group")
 class ExampleAutonomous : LinearOpMode() {
     // Declare members
-    private lateinit var robot: FourWheelRobot
+    private var robot: FourWheelRobot by LateInitConstProperty()
 
     override fun runOpMode() {
         robot = FourWheelRobot(hardwareMap)
