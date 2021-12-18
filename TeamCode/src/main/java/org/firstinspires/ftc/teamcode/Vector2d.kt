@@ -2,7 +2,8 @@ package org.firstinspires.ftc.teamcode
 
 data class Vector2d(val x: Double, val y: Double) {
 
-    constructor() : this
+    // Identity of a vector.
+    constructor() : this(0.0, 0.0)
 
     // Return a new vector that is rotated by an angle.
     // Positive angle is counterclockwise.
@@ -13,8 +14,6 @@ data class Vector2d(val x: Double, val y: Double) {
     )
 
     companion object {
-        private val identity = Vector2d(0, 0)
-
         // Static helper functions
         // This will probably generate a syntax error, cause I think "this" here
         // refers to the companion object, not the Vector2d constructor.

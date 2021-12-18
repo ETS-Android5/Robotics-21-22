@@ -2,6 +2,8 @@ package org.firstinspires.ftc.teamcode
 
 import com.qualcomm.robotcore.hardware.Gamepad
 
-fun Gamepad.leftTriggerPressed() = left_trigger > 0.85
+TODO("TEST")
 
-fun Gamepad.rightTriggerPressed() = right_trigger > 0.85
+val Gamepad.leftTriggerPressed get() = left_trigger > 0.85
+
+val Gamepad.rightTriggerPressed get() = right_trigger > 0.85
