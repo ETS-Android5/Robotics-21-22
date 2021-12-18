@@ -10,16 +10,16 @@ class LateInitConstProperty<T : Any> : ReadWriteProperty<Any?, T> {
     
     private var value: T? = null
 
-    override fun getValue(thisRef: Any?, kProp: KProperty<*>): T =
+    override fun getValue(thisRef: Any?, property: KProperty<*>): T =
         value ?: throw IllegalStateException(
-            "The property \"${kProp.name}\" from \"$thisRef\" "+
+            "The property \"${property.name}\" from \"$thisRef\" "+
             "was accessed before it was initialized."
         )
-    override fun setValue(thisRef: Any?, kProp: KProperty<*>, value: T) {
+    override fun setValue(thisRef: Any?, property: KProperty<*>, value: T) {
         if (this.value == null)
             this.value = value
         else throw IllegalStateException(
-            "The property \"${kProp.name}\" from \"$thisRef\" "+
+            "The property \"${property.name}\" from \"$thisRef\" "+
             "was written to after already being initialized once."
         )
     }
