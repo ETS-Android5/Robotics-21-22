@@ -21,12 +21,13 @@ class CompetitionTeleOp : LinearOpMode() {
 
         while (opModeIsActive()) {
             // Controller loop
-            if (GamepadUtil.leftTriggerPressed(gamepad1)) {
-                robot.rotate(-0.5)
-            } else if (GamepadUtil.rightTriggerPressed(gamepad1)) {
-                robot.rotate(0.5)
-            } else {
-                robot.translate(gamepad1.right_stick_x.toDouble(), (-1 * gamepad1.left_stick_y).toDouble())
+            when {
+                GamepadUtil.leftTriggerPressed(gamepad1) -> robot.rotate(-0.5)
+                GamepadUtil.rightTriggerPressed(gamepad1) -> robot.rotate(0.5)
+                else -> robot.translate(
+                    px = gamepad1.right_stick_x.toDouble(),
+                    py = (-1 * gamepad1.left_stick_y).toDouble(),
+                )
             }
         }
     }
