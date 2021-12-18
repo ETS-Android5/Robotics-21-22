@@ -33,8 +33,8 @@ class ExperimentingTeleOp : LinearOpMode() {
             controlLayout = when {
                 gamepad1.a -> ::configA
                 gamepad1.b -> ::configB
-                gamepad1.x -> ::configX
-                gamepad1.y -> ::configY
+                gamepad1.x -> {}
+                gamepad1.y -> {}
                 else -> controlLayout
             }
             
@@ -63,7 +63,4 @@ class ExperimentingTeleOp : LinearOpMode() {
             )
         }
     }
-
-    private fun configX() {}
-    private fun configY() {}
 }
