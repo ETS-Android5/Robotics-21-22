@@ -22,8 +22,8 @@ class ExampleTeleOp : LinearOpMode() {
         while (opModeIsActive()) {
             // Controller loop
             robot.rotate(when {
-                gamepad1.leftTriggerPressed() -> -0.5
-                gamepad1.rightTriggerPressed() -> 0.5
+                gamepad1.leftTriggerPressed -> -0.5
+                gamepad1.rightTriggerPressed -> 0.5
                 else -> 0.0
             })
         }

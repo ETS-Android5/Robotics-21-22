@@ -1,5 +1,8 @@
 package org.firstinspires.ftc.teamcode
 
+import kotlin.math.cos
+import kotlin.math.sin
+
 data class Vector2d(val x: Double, val y: Double) {
 
     // Identity of a vector.
@@ -9,17 +12,14 @@ data class Vector2d(val x: Double, val y: Double) {
     // Positive angle is counterclockwise.
     // Angle measured in radians.
     infix fun rotate(angle: Double) = Vector2d(
-        x = x * Math.cos(angle) - y * Math.sin(angle),
-        y = y * Math.cos(angle) + x * Math.sin(angle),
+        x = x * cos(angle) - y * sin(angle),
+        y = y * cos(angle) + x * sin(angle),
     )
 
     companion object {
         // Static helper functions
-        // This will probably generate a syntax error, cause I think "this" here
-        // refers to the companion object, not the Vector2d constructor.
-        TODO("Testing stuff below as described above")
         // This function allows you to get a vector using polar coordinates
         // instead of cartesian coordinates.
-        fun polar(r: Double, theta: Double) = this(r, 0.0).rotate(theta)
+        fun polar(r: Double, theta: Double) = Vector2d(r, 0.0).rotate(theta)
     }
 }

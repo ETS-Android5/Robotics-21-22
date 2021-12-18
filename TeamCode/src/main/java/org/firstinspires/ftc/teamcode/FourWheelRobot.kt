@@ -82,7 +82,6 @@ class FourWheelRobot(val hardwareMap: HardwareMap) {
      * An angle of 0 means forward. Positive is clockwise, negative is counterclockwise.
      * Power can be negative. In that case, robot will go in opposite direction.
      */
-    init TODO("Test if Math.toRadians is something in kotlin")
     fun translatePolar(power: Double, direction: Double) = translate(
         Vector2d(0.0, power).rotate(Math.toRadians(-1 * direction))
     )
