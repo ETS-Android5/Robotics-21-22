@@ -140,8 +140,7 @@ class ExperimentingTeleOp : LinearOpMode() {
     }
 
     private fun configA() {
-        TODO("Test")
-        const val scale = 0.5
+        val scale = 0.5
         when {
             gamepad1.leftTriggerPressed -> robot.rotate(-0.5 * scale)
             gamepad1.rightTriggerPressed -> robot.rotate(0.5 * scale)
