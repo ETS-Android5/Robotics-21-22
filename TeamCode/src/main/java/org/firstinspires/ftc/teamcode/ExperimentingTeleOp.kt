@@ -14,40 +14,36 @@ class ExperimentingTeleOp : LinearOpMode() {
     // Declare members
     private var robot: FourWheelRobot by LateInitConstProperty()
 
-    private var clawLeft: Servo? = null
-    private var clawRight: Servo? = null
+    private var clawLeft: Servo by LateInitConstProperty()
+    private var clawRight: Servo by LateInitConstProperty()
 
-    private var armLeft: DcMotor? = null
-    private var armRight: DcMotor? = null
+    private var armLeft: DcMotor by LateInitConstProperty()
+    private var armRight: DcMotor by LateInitConstProperty()
 
     override fun runOpMode() {
         robot = FourWheelRobot(hardwareMap)
         robot.reset()
 
-        clawLeft = RobotUtil.getServo(
-                hardwareMap,
-                "clawLeft",
-                Servo.Direction.REVERSE
+        clawLeft = hardwareMap.getServo(
+            "clawLeft",
+            Servo.Direction.REVERSE,
         )
-        clawRight = RobotUtil.getServo(
-                hardwareMap,
-                "clawRight",
-                Servo.Direction.FORWARD
+        clawRight = hardwareMap.getServo(
+            "clawRight",
+            Servo.Direction.FORWARD,
         )
 
-        armLeft = RobotUtil.getDcMotor(
-                hardwareMap,
-                "armLeft",
-                DcMotorSimple.Direction.REVERSE,
-                DcMotor.ZeroPowerBehavior.BRAKE,
-                DcMotor.RunMode.RUN_USING_ENCODER
+        armLeft = hardwareMap.getDcMotor(
+            "armLeft",
+            DcMotorSimple.Direction.REVERSE,
+            DcMotor.ZeroPowerBehavior.BRAKE,
+            DcMotor.RunMode.RUN_USING_ENCODER,
         )
-        armRight = RobotUtil.getDcMotor(
-                hardwareMap,
-                "armRight",
-                DcMotorSimple.Direction.FORWARD,
-                DcMotor.ZeroPowerBehavior.BRAKE,
-                DcMotor.RunMode.RUN_USING_ENCODER
+        armRight = hardwareMap.getDcMotor(
+            "armRight",
+            DcMotorSimple.Direction.FORWARD,
+            DcMotor.ZeroPowerBehavior.BRAKE,
+            DcMotor.RunMode.RUN_USING_ENCODER,
         )
 
         telemetry.addData("Status", "Initialized")
@@ -56,10 +52,10 @@ class ExperimentingTeleOp : LinearOpMode() {
         // Wait for the game to start (driver presses PLAY)
         waitForStart()
 
+        initArm()
+
         // Default is configA
         var controlLayout: () -> Unit = ::configA
-
-        initArm()
 
         while (opModeIsActive()) {
             // Controller loop
@@ -80,16 +76,16 @@ class ExperimentingTeleOp : LinearOpMode() {
     }
 
     private fun openClaws() {
-        clawLeft!!.position = 0.7
-        clawRight!!.position = 0.3
+        clawLeft.position = 0.7
+        clawRight.position = 0.3
     }
     private fun closeClaws() {
-        clawLeft!!.position = 0.85
-        clawRight!!.position = 0.45
+        clawLeft.position = 0.85
+        clawRight.position = 0.45
     }
 
     // Tunable parameters
-    // Each set of bounds = {lower (lowest position), upper (highest position)}
+    // Each set of bounds = (lower (lowest position), upper (highest position))
     private val armLeftBounds = intArrayOf(783, 284)
     private val armRightBounds = intArrayOf(506, -2)
     private val armMinPosition = 0.0
@@ -100,30 +96,30 @@ class ExperimentingTeleOp : LinearOpMode() {
 
     private fun initArm() {
         setArmPosition(armInitialPosition)
-        armLeft!!.mode = DcMotor.RunMode.RUN_TO_POSITION
-        armRight!!.mode = DcMotor.RunMode.RUN_TO_POSITION
-        armLeft!!.power = 0.3
-        armRight!!.power = 0.3
+        armLeft.mode = DcMotor.RunMode.RUN_TO_POSITION
+        armRight.mode = DcMotor.RunMode.RUN_TO_POSITION
+        armLeft.power = 0.3
+        armRight.power = 0.3
     }
     // Set arm position.
     // Parameter is a position value between (and including) 0.0 and 1.0.
     // 0.0 is arm's lowest position, 1.0 is arm's highest position.
     private fun setArmPosition(position: Double) {
         // Clamp arm position between 0.0 and 1.0.
-        var position = position
-        position = Math.max(0.0, Math.min(1.0, position))
+        TODO("Test")
+        var position = position.coerceIn(0.0, 1.0)
 
         // Compute outputs based on supplied position and arm bounds.
-        val outputs = intArrayOf(0, 0) // {left_output, right_output}
+        val outputs = intArrayOf(0, 0) // (left_output, right_output)
         val armBounds = arrayOf(armLeftBounds, armRightBounds)
         for (i in armBounds.indices) {
-            outputs[i] = Math.round(
-                    armBounds[i][0] + position * (armBounds[i][1] - armBounds[i][0])
-            ).toInt()
+            outputs[i] =
+                (armBounds[i][0] + position * (armBounds[i][1] - armBounds[i][0]))
+                .roundToInt()
         }
 
-        armLeft!!.targetPosition = outputs[0]
-        armRight!!.targetPosition = outputs[1]
+        armLeft.targetPosition = outputs[0]
+        armRight.targetPosition = outputs[1]
 
         armPosition = position
     }
@@ -131,12 +127,14 @@ class ExperimentingTeleOp : LinearOpMode() {
     // Shift arm position by some value.
     // Positive value moves arm up,
     // negative value moves arm down.
-    private fun shiftArmPosition(dPosition: Double) {
+    private fun shiftArmPosition(dPosition: Double) =
         setArmPosition(armPosition + dPosition)
-    }
 
     private fun defaultArmControl() {
-        if (gamepad1.dpad_up) shiftArmPosition(0.002) else if (gamepad1.dpad_down) shiftArmPosition(-0.002)
+        shiftArmPosition( when {
+            gamepad1.dpad_up -> 0.002
+            gamepad1.dpad_down -> -0.002
+        })
     }
 
     private fun configA() {
@@ -163,8 +161,10 @@ class ExperimentingTeleOp : LinearOpMode() {
             )
         }
 
-        if (gamepad1.leftTriggerPressed) openClaws()
-        else if (gamepad1.rightTriggerPressed) closeClaws()
+        when {
+            gamepad1.leftTriggerPressed -> openClaws()
+            gamepad1.rightTriggerPressed -> closeClaws()
+        }
 
         defaultArmControl()
     }
