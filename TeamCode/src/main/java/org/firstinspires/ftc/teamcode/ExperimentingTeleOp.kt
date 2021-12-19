@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode
 
 import kotlin.math.abs
+import kotlin.math.roundToInt
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
@@ -106,8 +107,7 @@ class ExperimentingTeleOp : LinearOpMode() {
     // 0.0 is arm's lowest position, 1.0 is arm's highest position.
     private fun setArmPosition(position: Double) {
         // Clamp arm position between 0.0 and 1.0.
-        TODO("Test")
-        var position = position.coerceIn(0.0, 1.0)
+        val position = position.coerceIn(0.0, 1.0)
 
         // Compute outputs based on supplied position and arm bounds.
         val outputs = intArrayOf(0, 0) // (left_output, right_output)
@@ -134,6 +134,7 @@ class ExperimentingTeleOp : LinearOpMode() {
         shiftArmPosition( when {
             gamepad1.dpad_up -> 0.002
             gamepad1.dpad_down -> -0.002
+            else -> return
         })
     }
 

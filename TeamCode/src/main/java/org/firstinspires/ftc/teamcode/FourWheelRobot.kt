@@ -16,7 +16,7 @@ class FourWheelRobot(val hardwareMap: HardwareMap) {
     // (when looking at wheel positions like a matrix)
     val wheels = listOf(leftFront, rightFront, leftRear, rightRear)
 
-    private inline fun getWheel(
+    private fun getWheel(
         motorName: String,
         direction: DcMotorSimple.Direction,
     ): DcMotor = hardwareMap.getDcMotor(
