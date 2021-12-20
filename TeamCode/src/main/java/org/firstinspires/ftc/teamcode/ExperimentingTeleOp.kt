@@ -34,6 +34,13 @@ class ExperimentingTeleOp : LinearOpMode() {
             Servo.Direction.FORWARD,
         )
 
+        for ((name, direction) in arrayOf(
+            Pair("armLeft", DcMotorSimple.Direction.REVERSE),
+            Pair("armRight", DcMotorSimple.Direction.FORWARD),
+        )) {
+            
+        }
+
         armLeft = hardwareMap.getDcMotor(
             "armLeft",
             DcMotorSimple.Direction.REVERSE,
@@ -76,66 +83,69 @@ class ExperimentingTeleOp : LinearOpMode() {
         }
     }
 
+    //SP stands for ServoPositions
+    private data class SP(val open: Double, val close: Double)
+    private data class ClawDescriptor(val servo: Servo, val positions: SP)
+    private val claws = listOf(
+        ClawDescriptor(
+            clawLeft,
+            SP(open=0.7, close=0.85),
+        ),
+        ClawDescriptor(
+            clawRight,
+            SP(open=0.3, close=0.45),
+        ),
+    )
+
     private fun openClaws() {
-        clawLeft.position = 0.7
-        clawRight.position = 0.3
+        for ((servo, positions) in claws)
+            servo.position = positions.open
     }
     private fun closeClaws() {
-        clawLeft.position = 0.85
-        clawRight.position = 0.45
+        for ((servo, positions) in claws)
+            servo.position = positions.close
     }
+
+    // Arm motor descriptor data class. Describes details of each arm motor.
+    // Each set of bounds = (lower (lowest position), upper (highest position))
+    private data class ArmMotorDescriptor(val motor: DcMotor, val bounds: IntRange)
 
     // Tunable parameters
-    // Each set of bounds = (lower (lowest position), upper (highest position))
-    private val armLeftBounds = intArrayOf(783, 284)
-    private val armRightBounds = intArrayOf(506, -2)
-    private val armMinPosition = 0.0
-    private val armMaxPosition = 1.0
+    private val armMotors = listOf(
+        ArmMotorDescriptor(armLeft, 783..284),
+        ArmMotorDescriptor(armRight, 506..-2),
+    )
+    private val armPositionBounds = 0.0..1.0
     private val armInitialPosition = 0.0
 
-    private var armPosition = 0.0
-
     private fun initArm() {
-        setArmPosition(armInitialPosition)
-        armLeft.mode = DcMotor.RunMode.RUN_TO_POSITION
-        armRight.mode = DcMotor.RunMode.RUN_TO_POSITION
-        armLeft.power = 0.3
-        armRight.power = 0.3
+        armPosition = armInitialPosition
+        for (motor in arrayOf(armLeft, armRight)) {
+            motor.mode = DcMotor.RunMode.RUN_TO_POSITION
+            motor.power = 0.3
+        }
     }
-    // Set arm position.
-    // Parameter is a position value between (and including) 0.0 and 1.0.
-    // 0.0 is arm's lowest position, 1.0 is arm's highest position.
-    private fun setArmPosition(position: Double) {
-        // Clamp arm position between 0.0 and 1.0.
-        val position = position.coerceIn(0.0, 1.0)
+    private var armPosition: Double = 0.0
+        // Set arm position.
+        // Parameter is a position value between (and including) 0.0 and 1.0.
+        // 0.0 is arm's lowest position, 1.0 is arm's highest position.
+        set(value) {
+            // Clamp arm position between 0.0 and 1.0.
+            field = value.coerceIn(0.0, 1.0)
 
-        // Compute outputs based on supplied position and arm bounds.
-        val outputs = intArrayOf(0, 0) // (left_output, right_output)
-        val armBounds = arrayOf(armLeftBounds, armRightBounds)
-        for (i in armBounds.indices) {
-            outputs[i] =
-                (armBounds[i][0] + position * (armBounds[i][1] - armBounds[i][0]))
-                .roundToInt()
+            // Compute outputs based on supplied position and arm bounds.
+            armMotors.map { (motor, bounds) ->
+                val lower = bounds.start; val upper = bounds.endInclusive
+                motor.targetPosition = (lower + field * (upper - lower)).roundToInt()
+            }
         }
 
-        armLeft.targetPosition = outputs[0]
-        armRight.targetPosition = outputs[1]
-
-        armPosition = position
-    }
-
-    // Shift arm position by some value.
-    // Positive value moves arm up,
-    // negative value moves arm down.
-    private fun shiftArmPosition(dPosition: Double) =
-        setArmPosition(armPosition + dPosition)
-
     private fun defaultArmControl() {
-        shiftArmPosition( when {
+        armPosition = when {
             gamepad1.dpad_up -> 0.002
             gamepad1.dpad_down -> -0.002
             else -> return
-        })
+        }
     }
 
     private fun configA() {
