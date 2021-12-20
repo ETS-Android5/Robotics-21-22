@@ -115,24 +115,19 @@ class ExperimentingTeleOp : LinearOpMode() {
 
         robot.resetArm()
 
-        // Default is configA
-        var controlLayout: () -> Unit = ::configA
+        val defaultScale = 1.0
+        var scale = defaultScale
 
         while (opModeIsActive()) {
             // Controller loop
 
-            // If any of the buttons on gamepad1 are pressed,
-            // change the controller configuration to the one
-            // assigned to that button.
-            controlLayout = when {
-                gamepad1.a -> ::configA
-                gamepad1.b -> ::configB
-                gamepad1.x -> pass
-                gamepad1.y -> pass
-                else -> controlLayout
+            scale = when {
+                gamepad1.a -> defaultScale
+                gamepad1.b -> 0.5 * defaultScale
+                else -> scale
             }
             
-            controlLayout()
+            normalConfig(scale)
         }
     }
 
@@ -144,33 +139,19 @@ class ExperimentingTeleOp : LinearOpMode() {
         }
     }
 
-    private fun configA() {
-        val scale = 0.5
-        when {
-            gamepad1.leftTriggerPressed -> robot.rotate(-0.5 * scale)
-            gamepad1.rightTriggerPressed -> robot.rotate(0.5 * scale)
-            else -> robot.translate(
-                px = gamepad1.right_stick_x.toDouble() * scale,
-                py = (-1 * gamepad1.left_stick_y).toDouble() * scale,
-            )
-        }
-
-        defaultArmControl()
-    }
-
-    private fun configB() {
-        when {
-            abs(gamepad1.right_stick_x) > 0.2 ->
-                robot.rotate(gamepad1.right_stick_x.toDouble())
-            else -> robot.translate(
-                px = gamepad1.left_stick_x.toDouble(),
-                py = (-1 * gamepad1.left_stick_y).toDouble(),
+    private fun normalConfig(scale: Double) {
+        if (abs(gamepad1.right_stick_x) > 0.2)
+            robot.rotate(gamepad1.right_stick_x * scale)
+        else {
+            robot.translate(
+                px = gamepad1.left_stick_x * scale,
+                py = (-1 * gamepad1.left_stick_y) * scale,
             )
         }
 
         when {
-            gamepad1.leftTriggerPressed -> openClaws()
-            gamepad1.rightTriggerPressed -> closeClaws()
+            gamepad1.leftTriggerPressed -> robot.openClaws()
+            gamepad1.rightTriggerPressed -> robot.closeClaws()
         }
 
         defaultArmControl()
