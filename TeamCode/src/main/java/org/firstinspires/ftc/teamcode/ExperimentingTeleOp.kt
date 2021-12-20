@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import com.qualcomm.robotcore.hardware.Servo
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorSimple
+import com.qualcomm.robotcore.hardware.HardwareMap
 
 private class MadMachinesRobot(hardwareMap: HardwareMap) : FourWheelRobot(hardwareMap) {
     val clawLeft = hardwareMap.getServo(
@@ -72,12 +73,12 @@ private class MadMachinesRobot(hardwareMap: HardwareMap) : FourWheelRobot(hardwa
     // Call this function after the game has started,
     // i.e. the player has pressed play.
     fun resetArm() {
+        armInitialized = true
         armPosition = armInitialPosition
         for (motor in arrayOf(armLeft, armRight)) {
             motor.mode = DcMotor.RunMode.RUN_TO_POSITION
             motor.power = 0.3
         }
-        armInitialized = true
     }
     var armPosition: Double = 0.0
         // Set arm position.
@@ -91,7 +92,7 @@ private class MadMachinesRobot(hardwareMap: HardwareMap) : FourWheelRobot(hardwa
 
             // Compute outputs based on supplied position and arm bounds.
             armMotors.map { (motor, bounds) ->
-                val lower = bounds.start; val upper = bounds.endInclusive
+                val lower = bounds.first; val upper = bounds.last
                 motor.targetPosition = (lower + field * (upper - lower)).roundToInt()
             }
         }

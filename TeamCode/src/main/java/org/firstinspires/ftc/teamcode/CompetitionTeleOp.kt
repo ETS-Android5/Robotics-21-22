@@ -22,8 +22,8 @@ class CompetitionTeleOp : LinearOpMode() {
         while (opModeIsActive()) {
             // Controller loop
             when {
-                GamepadUtil.leftTriggerPressed(gamepad1) -> robot.rotate(-0.5)
-                GamepadUtil.rightTriggerPressed(gamepad1) -> robot.rotate(0.5)
+                gamepad1.leftTriggerPressed -> robot.rotate(-0.5)
+                gamepad1.rightTriggerPressed -> robot.rotate(0.5)
                 else -> robot.translate(
                     px = gamepad1.right_stick_x.toDouble(),
                     py = (-1 * gamepad1.left_stick_y).toDouble(),
