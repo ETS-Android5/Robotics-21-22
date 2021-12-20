@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorSimple
 
-class FourWheelRobot(val hardwareMap: HardwareMap) {
+open class FourWheelRobot(val hardwareMap: HardwareMap) {
 
     // Declare and initialize motors
     val leftFront = getWheel("leftFront", DcMotorSimple.Direction.FORWARD)
