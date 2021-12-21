@@ -87,7 +87,7 @@ private class MadMachinesRobot(hardwareMap: HardwareMap) : FourWheelRobot(hardwa
         armPosition = armInitialPosition
         for (motor in arrayOf(armLeft, armRight)) {
             motor.mode = DcMotor.RunMode.RUN_TO_POSITION
-            motor.power = 0.3
+            motor.power = 0.2
         }
     }
     var armPosition: Double = 0.0
@@ -134,7 +134,7 @@ class ExperimentingTeleOp : LinearOpMode() {
 
             scale = when {
                 gamepad1.a -> defaultScale
-                gamepad1.b -> 0.5 * defaultScale
+                gamepad1.b -> 0.1 * defaultScale
                 else -> scale
             }
             
@@ -143,10 +143,12 @@ class ExperimentingTeleOp : LinearOpMode() {
     }
 
     private fun defaultArmControl() {
-        robot.armPosition = when {
-            gamepad1.dpad_up -> 0.002
-            gamepad1.dpad_down -> -0.002
-            else -> return
+        when {
+            gamepad1.dpad_left -> robot.armPosition = 0.0
+            gamepad1.dpad_right -> robot.armPosition = 1.0
+
+            gamepad1.dpad_up -> robot.armPosition += 0.002
+            gamepad1.dpad_down -> robot.armPosition -= 0.002
         }
     }
 
