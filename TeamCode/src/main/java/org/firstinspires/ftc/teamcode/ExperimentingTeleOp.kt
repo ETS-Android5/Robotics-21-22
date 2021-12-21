@@ -33,6 +33,16 @@ private class MadMachinesRobot(hardwareMap: HardwareMap) : FourWheelRobot(hardwa
         DcMotor.RunMode.RUN_USING_ENCODER,
     )
 
+    private fun getArm(
+        name: String,
+        direction: DcMotorSimple.Direction,
+    ) = hardwareMap.getDcMotor(
+        name,
+        direction,
+        DcMotor.ZeroPowerBehavior.BRAKE,
+        DcMotor.RunMode.RUN_USING_ENCODER,
+    )
+
     //SP stands for ServoPositions
     private data class SP(val open: Double, val close: Double)
     private data class ClawDescriptor(val servo: Servo, val positions: SP)
@@ -59,12 +69,12 @@ private class MadMachinesRobot(hardwareMap: HardwareMap) : FourWheelRobot(hardwa
 
     // Arm motor descriptor data class. Describes details of each arm motor.
     // Each set of bounds = (lower (lowest position), upper (highest position))
-    private data class ArmMotorDescriptor(val motor: DcMotor, val bounds: IntRange)
+    private data class ArmMotorDescriptor(val motor: DcMotor, val bounds: Pair<Int, Int>)
 
     // Tunable parameters
     private val armMotors = listOf(
-        ArmMotorDescriptor(armLeft, 783..284),
-        ArmMotorDescriptor(armRight, 506..-2),
+        ArmMotorDescriptor(armLeft, 783 to 284),
+        ArmMotorDescriptor(armRight, 506 to -2),
     )
     private val armPositionBounds = 0.0..1.0
     private val armInitialPosition = 0.0
@@ -92,7 +102,7 @@ private class MadMachinesRobot(hardwareMap: HardwareMap) : FourWheelRobot(hardwa
 
             // Compute outputs based on supplied position and arm bounds.
             armMotors.map { (motor, bounds) ->
-                val lower = bounds.first; val upper = bounds.last
+                val (lower, upper) = bounds
                 motor.targetPosition = (lower + field * (upper - lower)).roundToInt()
             }
         }
