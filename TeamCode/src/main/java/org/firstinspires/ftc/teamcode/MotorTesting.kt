@@ -2,9 +2,6 @@ package org.firstinspires.ftc.teamcode
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
-import com.qualcomm.robotcore.hardware.DcMotor
-import com.qualcomm.robotcore.hardware.Servo
-import com.qualcomm.robotcore.hardware.DcMotorSimple
 
 // Motor and arm tester
 @TeleOp(name = "Motor Tester", group = "Dev")
@@ -13,7 +10,7 @@ class MotorTesting : LinearOpMode() {
     private var robot: MadMachinesRobot by LateInitConstProperty()
 
     override fun runOpMode() {
-        robot = FourWheelRobot(hardwareMap)
+        robot = MadMachinesRobot(hardwareMap)
         robot.reset()
 
         telemetry.addData("Status", "Initialized")
@@ -32,7 +29,17 @@ class MotorTesting : LinearOpMode() {
                     robot.clawRight.position = 1.0
                 }
             }
-            val thingsToPrint: Array<String, Any?> = arrayOf(
+            when {
+                gamepad1.dpad_up -> {
+                    for (motor in arrayOf(robot.armLeft, robot.armRight))
+                        motor.targetPosition += 1
+                }
+                gamepad1.dpad_down -> {
+                    for (motor in arrayOf(robot.armLeft, robot.armRight))
+                        motor.targetPosition -= 1
+                }
+            }
+            val thingsToPrint: Array<Pair<String, Any?>> = arrayOf(
                 "arm left" to robot.armLeft.currentPosition,
                 "arm right" to robot.armRight.currentPosition,
                 "left front wheel" to robot.leftFront.currentPosition,

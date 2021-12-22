@@ -126,7 +126,7 @@ class ExperimentingTeleOp : LinearOpMode() {
 
         robot.resetArm()
 
-        val defaultScale = 1.0
+        val defaultScale = 0.7
         var scale = defaultScale
 
         while (opModeIsActive()) {
@@ -134,7 +134,7 @@ class ExperimentingTeleOp : LinearOpMode() {
 
             scale = when {
                 gamepad1.a -> defaultScale
-                gamepad1.b -> 0.1 * defaultScale
+                gamepad1.b -> 0.1
                 else -> scale
             }
             
