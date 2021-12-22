@@ -33,6 +33,13 @@ class MadMachinesRobot(hardwareMap: HardwareMap) : FourWheelRobot(hardwareMap) {
         DcMotor.RunMode.RUN_USING_ENCODER,
     )
 
+    val carousel = hardwareMap.getDcMotor(
+            "carousel",
+            DcMotorSimple.Direction.FORWARD,
+            DcMotor.ZeroPowerBehavior.FLOAT,
+            DcMotor.RunMode.RUN_USING_ENCODER,
+    )
+
     private fun getArm(
         name: String,
         direction: DcMotorSimple.Direction,
@@ -42,6 +49,12 @@ class MadMachinesRobot(hardwareMap: HardwareMap) : FourWheelRobot(hardwareMap) {
         DcMotor.ZeroPowerBehavior.BRAKE,
         DcMotor.RunMode.RUN_USING_ENCODER,
     )
+
+    var carouselSpinning: Boolean = false
+        set(value) {
+            carousel.power = if (value) 0.5 else 0.0
+            field = value
+        }
 
     //SP stands for ServoPositions
     private data class SP(val open: Double, val close: Double)
@@ -152,6 +165,7 @@ class ExperimentingTeleOp : LinearOpMode() {
         }
     }
 
+    var rightBumperPressed = false
     private fun normalConfig(scale: Double) {
         if (abs(gamepad1.right_stick_x) > 0.2)
             robot.rotate(gamepad1.right_stick_x * scale)
@@ -165,6 +179,16 @@ class ExperimentingTeleOp : LinearOpMode() {
         when {
             gamepad1.leftTriggerPressed -> robot.openClaws()
             gamepad1.rightTriggerPressed -> robot.closeClaws()
+        }
+
+        if (gamepad1.right_bumper) {
+            if (!rightBumperPressed) {
+                robot.carouselSpinning = !robot.carouselSpinning
+                rightBumperPressed = true
+            }
+        }
+        else {
+            rightBumperPressed = false
         }
 
         defaultArmControl()
