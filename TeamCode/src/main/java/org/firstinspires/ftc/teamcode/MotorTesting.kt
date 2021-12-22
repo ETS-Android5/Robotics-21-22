@@ -10,78 +10,39 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple
 @TeleOp(name = "Motor Tester", group = "Dev")
 class MotorTesting : LinearOpMode() {
     // Declare members
-    private var robot: FourWheelRobot? = null
-    private var armLeft: DcMotor? = null
-    private var armRight: DcMotor? = null
-    private var clawLeft: Servo? = null
-    private var clawRight: Servo? = null
+    private var robot: MadMachinesRobot by LateInitConstProperty()
+
     override fun runOpMode() {
         robot = FourWheelRobot(hardwareMap)
-        robot!!.reset()
-        armLeft = hardwareMap.getDcMotor(
-                "armLeft",
-                DcMotorSimple.Direction.REVERSE,
-                DcMotor.ZeroPowerBehavior.FLOAT,
-                DcMotor.RunMode.RUN_USING_ENCODER
-        )
-        armRight = hardwareMap.getDcMotor(
-                "armRight",
-                DcMotorSimple.Direction.FORWARD,
-                DcMotor.ZeroPowerBehavior.FLOAT,
-                DcMotor.RunMode.RUN_USING_ENCODER
-        )
-        clawLeft = hardwareMap.getServo(
-                "clawLeft",
-                Servo.Direction.REVERSE
-        )
-        clawRight = hardwareMap.getServo(
-                "clawRight",
-                Servo.Direction.FORWARD
-        )
+        robot.reset()
+
         telemetry.addData("Status", "Initialized")
         telemetry.update()
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart()
         while (opModeIsActive()) {
-            if (gamepad1.a) {
-                clawLeft!!.position = 0.0
-                clawRight!!.position = 0.0
-            } else if (gamepad1.b) {
-                clawLeft!!.position = 1.0
-                clawRight!!.position = 1.0
+            when {
+                gamepad1.a -> {
+                    robot.clawLeft.position = 0.0
+                    robot.clawRight.position = 0.0
+                }
+                gamepad1.b -> {
+                    robot.clawLeft.position = 1.0
+                    robot.clawRight.position = 1.0
+                }
             }
-            telemetry.addData("arm left", armLeft!!.currentPosition)
-            telemetry.addData("arm right", armRight!!.currentPosition)
-            telemetry.addData("left front wheel", robot!!.leftFront.currentPosition)
-            telemetry.addData("left trigger", gamepad1.left_trigger)
-            telemetry.addData("left claw", clawLeft!!.position)
-            telemetry.addData("right claw", clawRight!!.position)
+            val thingsToPrint: Array<String, Any?> = arrayOf(
+                "arm left" to robot.armLeft.currentPosition,
+                "arm right" to robot.armRight.currentPosition,
+                "left front wheel" to robot.leftFront.currentPosition,
+                "left trigger" to gamepad1.left_trigger,
+                "left claw" to robot.clawLeft.position,
+                "right claw" to robot.clawRight.position,
+            )
+            for ((caption, content) in thingsToPrint)
+                telemetry.addData(caption, content)
             telemetry.update()
         }
-    }
-
-    private var armPosition = 0.0
-    private val maxArmPos = 100.0
-    private val minArmPos = 0.0
-    private fun initArm() {
-        setArmPosition(minArmPos)
-        armLeft!!.mode = DcMotor.RunMode.RUN_TO_POSITION
-        armRight!!.mode = DcMotor.RunMode.RUN_TO_POSITION
-        armLeft!!.power = 0.5
-        armRight!!.power = 0.5
-    }
-
-    private fun setArmPosition(ticks: Double) {
-        // Clamp arm position between min and max.
-        // ticks = Math.max(minArmPos, Math.min(ticks, maxArmPos));
-        val output = Math.round(ticks).toInt()
-        armLeft!!.targetPosition = output
-        armRight!!.targetPosition = output
-        armPosition = ticks
-    }
-
-    private fun shiftArmPosition(dTicks: Double) {
-        setArmPosition(armPosition + dTicks)
     }
 }

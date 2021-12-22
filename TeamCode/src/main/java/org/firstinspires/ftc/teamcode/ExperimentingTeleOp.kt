@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorSimple
 import com.qualcomm.robotcore.hardware.HardwareMap
 
-private class MadMachinesRobot(hardwareMap: HardwareMap) : FourWheelRobot(hardwareMap) {
+class MadMachinesRobot(hardwareMap: HardwareMap) : FourWheelRobot(hardwareMap) {
     val clawLeft = hardwareMap.getServo(
         "clawLeft",
         Servo.Direction.REVERSE,
