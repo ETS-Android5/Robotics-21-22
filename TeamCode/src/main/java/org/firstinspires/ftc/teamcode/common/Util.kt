@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode
+package org.firstinspires.ftc.teamcode.common
 
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
