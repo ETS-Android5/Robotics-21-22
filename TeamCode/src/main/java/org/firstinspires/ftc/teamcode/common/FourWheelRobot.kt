@@ -4,19 +4,19 @@ import com.qualcomm.robotcore.hardware.HardwareMap
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorSimple
 
-open class FourWheelRobot(val hardwareMap: HardwareMap) {
+abstract class FourWheelRobot(val hardwareMap: HardwareMap) {
 
-    // Declare and initialize motors
-    val leftFront = getWheel("leftFront", DcMotorSimple.Direction.FORWARD)
-    val rightFront = getWheel("rightFront", DcMotorSimple.Direction.FORWARD)
-    val leftRear = getWheel("leftRear", DcMotorSimple.Direction.FORWARD)
-    val rightRear = getWheel("rightRear", DcMotorSimple.Direction.FORWARD)
+    // Declare motors
+    abstract val leftFront: DcMotor
+    abstract val rightFront: DcMotor
+    abstract val leftRear: DcMotor
+    abstract val rightRear: DcMotor
 
     // Stores wheel motor fields in row major order
     // (when looking at wheel positions like a matrix)
     val wheels = listOf(leftFront, rightFront, leftRear, rightRear)
 
-    private fun getWheel(
+    protected fun getWheel(
         motorName: String,
         direction: DcMotorSimple.Direction,
     ): DcMotor = hardwareMap.getDcMotor(

@@ -1,15 +1,17 @@
-package org.firstinspires.ftc.teamcode.common
+package org.firstinspires.ftc.teamcode.example
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 
+import org.firstinspires.ftc.teamcode.common.LateInitConstProperty
+
 @Autonomous(name = "Example Autonomous", group = "Example Group")
 class ExampleAutonomous : LinearOpMode() {
     // Declare members
-    private var robot: FourWheelRobot by LateInitConstProperty()
+    private var robot: ExampleRobot by LateInitConstProperty()
 
     override fun runOpMode() {
-        robot = FourWheelRobot(hardwareMap)
+        robot = ExampleRobot(hardwareMap)
         robot.reset()
 
         telemetry.addData("Status", "Initialized")

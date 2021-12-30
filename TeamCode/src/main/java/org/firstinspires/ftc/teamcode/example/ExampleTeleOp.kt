@@ -1,15 +1,17 @@
-package org.firstinspires.ftc.teamcode.common
+package org.firstinspires.ftc.teamcode.example
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 
+import org.firstinspires.ftc.teamcode.common.LateInitConstProperty
+
 @TeleOp(name = "Example TeleOp", group = "Example Group")
 class ExampleTeleOp : LinearOpMode() {
     // Declare members
-    private var robot: FourWheelRobot by LateInitConstProperty()
+    private var robot: ExampleRobot by LateInitConstProperty()
 
     override fun runOpMode() {
-        robot = FourWheelRobot(hardwareMap)
+        robot = ExampleRobot(hardwareMap)
         robot.reset()
 
         telemetry.addData("Status", "Initialized")
