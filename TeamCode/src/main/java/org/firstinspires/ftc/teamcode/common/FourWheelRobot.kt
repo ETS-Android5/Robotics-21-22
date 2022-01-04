@@ -38,6 +38,14 @@ abstract class FourWheelRobot(val hardwareMap: HardwareMap) {
         return this
     }
 
+    fun setWheelPowers(vararg buffers: FourWheelBuffer) {
+        val superposition = FourWheelBuffer.concat(buffers)
+        leftFront.power = superposition.leftFront
+        rightFront.power = superposition.rightFront
+        leftRear.power = superposition.leftRear
+        rightRear.power = superposition.rightRear
+    }
+
     // Reset all hardware on the robot.
     // Call this method to initialize the robot
     // before you use it.
