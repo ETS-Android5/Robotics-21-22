@@ -39,7 +39,7 @@ abstract class FourWheelRobot(val hardwareMap: HardwareMap) {
     }
 
     fun setWheelPowers(vararg buffers: FourWheelBuffer) {
-        val superposition = FourWheelBuffer.concat(buffers)
+        val superposition = buffers.sum()
         leftFront.power = superposition.leftFront
         rightFront.power = superposition.rightFront
         leftRear.power = superposition.leftRear
