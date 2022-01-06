@@ -18,6 +18,13 @@ data class FourWheelBuffer(
         this.leftFront + other.leftFront, this.rightFront + other.rightFront,
         this.leftRear + other.leftRear, this.rightRear + other.rightRear,
     )
+
+    // This method scales this buffer by some value.
+    operator fun times(value: Double) = FourWheelBuffer(
+        leftFront*value, rightFront*value,
+        leftRear*value, rightRear*value,
+    )
+    operator fun div(value: Double) = times(1/value)
 }
 
 // This function superimposes a bunch of buffers and returns a new buffer.
