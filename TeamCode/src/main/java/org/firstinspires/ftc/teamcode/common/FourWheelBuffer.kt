@@ -33,3 +33,6 @@ fun Array<out FourWheelBuffer>.sum() =
     this.fold(FourWheelBuffer(), FourWheelBuffer::plus)
 fun Iterable<FourWheelBuffer>.sum() =
     this.fold(FourWheelBuffer(), FourWheelBuffer::plus)
+
+fun FourWheelBuffer.clampToValue(value: Double = 1.0) =
+    this * value/checkNotNull(doubleArrayOf(kkkkkkkkkkkkk).maxOrNull())
