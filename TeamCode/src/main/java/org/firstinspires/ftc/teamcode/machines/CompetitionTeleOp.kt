@@ -3,14 +3,18 @@ package org.firstinspires.ftc.teamcode.machines
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 
+import org.firstinspires.ftc.teamcode.common.LateInitConstProperty
+import org.firstinspires.ftc.teamcode.common.leftTriggerPressed
+import org.firstinspires.ftc.teamcode.common.rightTriggerPressed
+
 // This class contains the code for the main competition TeleOp.
 @TeleOp(name = "Main TeleOp", group = "Main")
 class CompetitionTeleOp : LinearOpMode() {
     // Declare members
-    private var robot: FourWheelRobot by LateInitConstProperty()
+    private var robot: MadMachinesRobot by LateInitConstProperty()
 
     override fun runOpMode() {
-        robot = FourWheelRobot(hardwareMap)
+        robot = MadMachinesRobot(hardwareMap)
         robot.reset()
 
         telemetry.addData("Status", "Initialized")

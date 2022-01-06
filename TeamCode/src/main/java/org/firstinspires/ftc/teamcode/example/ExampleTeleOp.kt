@@ -4,6 +4,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 
 import org.firstinspires.ftc.teamcode.common.LateInitConstProperty
+import org.firstinspires.ftc.teamcode.common.leftTriggerPressed
+import org.firstinspires.ftc.teamcode.common.rightTriggerPressed
 
 @TeleOp(name = "Example TeleOp", group = "Example Group")
 class ExampleTeleOp : LinearOpMode() {

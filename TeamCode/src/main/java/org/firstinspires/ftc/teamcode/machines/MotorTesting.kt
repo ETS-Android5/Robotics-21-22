@@ -3,6 +3,8 @@ package org.firstinspires.ftc.teamcode.machines
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 
+import org.firstinspires.ftc.teamcode.common.LateInitConstProperty
+
 // Motor and arm tester
 @TeleOp(name = "Motor Tester", group = "Dev")
 class MotorTesting : LinearOpMode() {

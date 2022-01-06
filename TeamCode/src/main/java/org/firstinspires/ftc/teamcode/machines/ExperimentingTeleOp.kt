@@ -5,6 +5,10 @@ import kotlin.math.abs
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 
+import org.firstinspires.ftc.teamcode.common.LateInitConstProperty
+import org.firstinspires.ftc.teamcode.common.leftTriggerPressed
+import org.firstinspires.ftc.teamcode.common.rightTriggerPressed
+
 // This class is a TeleOp for experimenting different things.
 @TeleOp(name = "Experimenting TeleOp", group = "Dev")
 class ExperimentingTeleOp : LinearOpMode() {

@@ -8,6 +8,8 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple
 import com.qualcomm.robotcore.hardware.HardwareMap
 
 import org.firstinspires.ftc.teamcode.common.FourWheelRobot
+import org.firstinspires.ftc.teamcode.common.getDcMotor
+import org.firstinspires.ftc.teamcode.common.getServo
 
 class MadMachinesRobot(hardwareMap: HardwareMap) : FourWheelRobot(hardwareMap) {
 

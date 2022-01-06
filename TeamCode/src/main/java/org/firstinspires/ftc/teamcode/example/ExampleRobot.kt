@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.example
 
 import com.qualcomm.robotcore.hardware.DcMotorSimple.Direction
+import com.qualcomm.robotcore.hardware.HardwareMap
 
 import org.firstinspires.ftc.teamcode.common.FourWheelRobot
 
