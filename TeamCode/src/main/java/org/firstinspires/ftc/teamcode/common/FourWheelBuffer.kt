@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.common
 
+import kotlin.math.abs
+
 // This class is a monoid.
 data class FourWheelBuffer(
     val leftFront: Double,
@@ -24,19 +26,12 @@ data class FourWheelBuffer(
         )
 
     // This method superimposes this buffer and the supplied buffer.
-    operator fun plus(other: FourWheelBuffer) = FourWheelBuffer(
-        this.leftFront + other.leftFront, this.rightFront + other.rightFront,
-        this.leftRear + other.leftRear, this.rightRear + other.rightRear,
-    )
-    operator fun plus(other: FourWheelBuffer) = FourWheelBuffer(
+    operator fun plus(other: FourWheelBuffer) =
         FourWheelBuffer(values.zip(other.values) { a, b -> a+b })
-    )
 
     // This method scales this buffer by some value.
-    operator fun times(value: Double) = FourWheelBuffer(
-        leftFront*value, rightFront*value,
-        leftRear*value, rightRear*value,
-    )
+    operator fun times(value: Double) =
+        FourWheelBuffer(values.map { it*value })
     operator fun div(value: Double) = times(1/value)
 }
 
@@ -47,7 +42,9 @@ fun Array<out FourWheelBuffer>.sum() =
 fun Iterable<FourWheelBuffer>.sum() =
     this.fold(FourWheelBuffer(), FourWheelBuffer::plus)
 
+// This function scales the buffer so that the values are constrained
+// between -1*value and value.
 fun FourWheelBuffer.clampToValue(value: Double = 1.0): FourWheelBuffer {
-    val scalingFactor = value/checkNotNull(values.maxOrNull())
+    val scalingFactor = value/checkNotNull(values.map(::abs).maxOrNull())
     return this * scalingFactor
 }
