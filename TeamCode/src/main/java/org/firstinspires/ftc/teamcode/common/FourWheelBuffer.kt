@@ -28,11 +28,16 @@ data class FourWheelBuffer(
 }
 
 // This function superimposes a bunch of buffers and returns a new buffer.
-fun sum(vararg buffers: FourWheelBuffer) = buffers.sum()
+fun sumOf(vararg buffers: FourWheelBuffer) = buffers.sum()
 fun Array<out FourWheelBuffer>.sum() =
     this.fold(FourWheelBuffer(), FourWheelBuffer::plus)
 fun Iterable<FourWheelBuffer>.sum() =
     this.fold(FourWheelBuffer(), FourWheelBuffer::plus)
 
-fun FourWheelBuffer.clampToValue(value: Double = 1.0) =
-    this * value/checkNotNull(doubleArrayOf(kkkkkkkkkkkkk).maxOrNull())
+fun FourWheelBuffer.clampToValue(value: Double = 1.0): FourWheelBuffer {
+    val scalingFactor = value/checkNotNull(doubleArrayOf(
+        leftFront, rightFront,
+        leftRear, rightRear,
+    ).maxOrNull())
+    return this * scalingFactor
+}
