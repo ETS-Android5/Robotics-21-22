@@ -12,11 +12,24 @@ data class FourWheelBuffer(
         0.0, 0.0,
         0.0, 0.0,
     )
+    private constructor(values: List<Double>): this(
+        values[0], values[1],
+        values[2], values[3],
+    )
+
+    val values: DoubleArray
+        get() = doubleArrayOf(
+            leftFront, rightFront,
+            leftRear, rightRear,
+        )
 
     // This method superimposes this buffer and the supplied buffer.
     operator fun plus(other: FourWheelBuffer) = FourWheelBuffer(
         this.leftFront + other.leftFront, this.rightFront + other.rightFront,
         this.leftRear + other.leftRear, this.rightRear + other.rightRear,
+    )
+    operator fun plus(other: FourWheelBuffer) = FourWheelBuffer(
+        FourWheelBuffer(values.zip(other.values) { a, b -> a+b })
     )
 
     // This method scales this buffer by some value.
@@ -35,9 +48,6 @@ fun Iterable<FourWheelBuffer>.sum() =
     this.fold(FourWheelBuffer(), FourWheelBuffer::plus)
 
 fun FourWheelBuffer.clampToValue(value: Double = 1.0): FourWheelBuffer {
-    val scalingFactor = value/checkNotNull(doubleArrayOf(
-        leftFront, rightFront,
-        leftRear, rightRear,
-    ).maxOrNull())
+    val scalingFactor = value/checkNotNull(values.maxOrNull())
     return this * scalingFactor
 }
