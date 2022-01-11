@@ -39,12 +39,10 @@ class MotorTesting : LinearOpMode() {
                         motor.targetPosition -= 1
                 }
             }
-            if (gamepad1.a) {
-                robot.leftFront.power = 0.5
-            }
-            else {
-                robot.leftFront.power = 0.0
-            }
+            robot.leftFront.power = if (gamepad1.left_bumper) 0.5 else 0.0
+            robot.rightFront.power = if (gamepad1.right_bumper) 0.5 else 0.0
+            robot.leftRear.power = if (gamepad1.leftTriggerPressed) 0.5 else 0.0
+            robot.rightRear.power = if (gamepad1.rightTriggerPressed) 0.5 else 0.0
             val thingsToPrint: Array<Pair<String, Any?>> = arrayOf(
                 "arm left" to robot.armLeft.currentPosition,
                 "arm right" to robot.armRight.currentPosition,
