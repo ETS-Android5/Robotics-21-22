@@ -27,7 +27,7 @@ data class FourWheelBuffer(
 
     // This method superimposes this buffer and the supplied buffer.
     operator fun plus(other: FourWheelBuffer) =
-        FourWheelBuffer(values.zip(other.values) { a, b -> a+b })
+        FourWheelBuffer(values.zip(other.values, ::sum))
 
     // This method scales this buffer by some value.
     operator fun times(value: Double) =

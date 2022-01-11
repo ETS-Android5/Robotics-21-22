@@ -27,23 +27,32 @@ abstract class FourWheelRobot(val hardwareMap: HardwareMap) {
     )
 
     // Robot utility methods
-    // This method sets the power of the wheel motors
-    // to the powers specified.
-    // The array specifies powers in row major order
-    // (when looking at robot wheels like a matrix).
-    fun setWheelPowers(vararg powers: Double): FourWheelRobot {
-        for ((power, wheel) in powers zip wheels) {
+
+    /**
+     * This method sets the power of the wheel motors
+     * to the powers specified.
+     * Powers are specified in row major order
+     * (when looking at robot wheels like a matrix).
+     */
+    fun move(
+        leftFront: Double, rightFront: Double,
+        leftRear: Double, rightRear: Double,
+    ) = move(FourWheelBuffer(
+        leftFront, rightFront,
+        leftRear, rightRear,
+    ))
+    /**
+     * Same as above except sets wheel powers based on
+     * values in zero or more FourWheelBuffers.
+     * If no FourWheelBuffers are supplied, then the method
+     * sets wheel powers to the identity buffer, which is
+     * a buffer with all zeros.
+     */
+    fun move(vararg buffers: FourWheelBuffer) {
+        val superposition = buffers.sum().clampToValue(1.0)
+        for ((power, wheel) in superposition.values zip wheels) {
             wheel.power = power
         }
-        return this
-    }
-
-    fun setWheelPowers(vararg buffers: FourWheelBuffer) {
-        val superposition = buffers.sum()
-        leftFront.power = superposition.leftFront
-        rightFront.power = superposition.rightFront
-        leftRear.power = superposition.leftRear
-        rightRear.power = superposition.rightRear
     }
 
     // Reset all hardware on the robot.
@@ -55,16 +64,15 @@ abstract class FourWheelRobot(val hardwareMap: HardwareMap) {
         }
     }
 
-    /* This method takes two power values, a px and py, and linearly translates the robot
-     * with the power direction indicated by these values.
+    /**
+     * This method takes two power values, a px and py, and returns a buffer that
+     * linearly translates the robot with the power and direction indicated by these values.
      * Imagine the robot on the origin of a coordinate plane, with the front facing positive y.
      * px is the power value in the x direction. py is the power value in the y direction.
      * They can be positive and negative, and the directions the sign indicates is the same
      * in the real world as in a coordinate plane (negative x means left, positive y means forward, etc.).
-     *
-     * The method returns "this", so that the user can chain together commands.
      */
-    fun translate(px: Double, py: Double): FourWheelRobot {
+    fun translate(px: Double, py: Double): FourWheelBuffer {
         // Check for NaN
         if (px.isNaN() || py.isNaN())
             throw IllegalArgumentException("You cannot supply NaN into the translate function.")
@@ -73,17 +81,17 @@ abstract class FourWheelRobot(val hardwareMap: HardwareMap) {
         val a = px + py
         val b = py - px
 
-        // Set motor powers
-        leftFront.power = a
-        rightFront.power = b
-        leftRear.power = b
-        rightRear.power = a
-        return this
+        // Return buffer
+        return FourWheelBuffer(
+            a, b,
+            b, a,
+        )
     }
 
     fun translate(vector: Vector2d) = translate(vector.x, vector.y)
 
-    /* This method is like the translate method except it takes a power value
+    /**
+     * This method is like the translate method except it takes a power value
      * and an angle (in degrees).
      * It translates with the power represented by the power provided,
      * in the direction represented by the angle.
@@ -94,22 +102,22 @@ abstract class FourWheelRobot(val hardwareMap: HardwareMap) {
         Vector2d(0.0, power).rotate(Math.toRadians(-1 * direction))
     )
 
-    /* This method takes one power value and rotates the robot
-     * with the power and direction specified by the value.
+    /**
+     * This method takes one power value and returns a buffer that
+     * rotates the robot with the power and direction specified by the value.
      * Magnitude of power controls power of rotation.
      * If power is positive, robot rotates clockwise.
      * If power is negative, robot rotates counterclockwise.
      */
-    fun rotate(power: Double): FourWheelRobot {
+    fun rotate(power: Double): FourWheelBuffer {
         // Check for NaN
         if (power.isNaN())
             throw IllegalArgumentException("You cannot supply NaN as power parameter into the rotate function.")
 
-        leftFront.power = power
-        rightFront.power = -power
-        leftRear.power = power
-        rightRear.power = -power
-        return this
+        return FourWheelBuffer(
+            power, -power,
+            power, -power,
+        )
     }
 
 }
