@@ -42,9 +42,14 @@ fun Array<out FourWheelBuffer>.sum() =
 fun Iterable<FourWheelBuffer>.sum() =
     this.fold(FourWheelBuffer(), FourWheelBuffer::plus)
 
-// This function scales the buffer so that the values are constrained
-// between -1*value and value.
-fun FourWheelBuffer.clampToValue(value: Double = 1.0): FourWheelBuffer {
-    val scalingFactor = value/checkNotNull(values.map(::abs).maxOrNull())
-    return this * scalingFactor
+// This function ensures that all values are between -1*value and value
+// by scaling the buffer if one or more values are outside of the range.
+// If value is negative, 
+scales the buffer so that the values are constrained
+// 
+fun FourWheelBuffer.clampToValue(value: Double): FourWheelBuffer {
+    require(value >= 0.0) { "Value supplied to clampToValue cannot be negative." }
+    val maxValue = checkNotNull(values.map(::abs).maxOrNull())
+    if (maxValue >= value) return this
+    else return this * (value/maxValue)
 }

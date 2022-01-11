@@ -44,23 +44,19 @@ abstract class FourWheelRobot(val hardwareMap: HardwareMap) {
     /**
      * Same as above except sets wheel powers based on
      * values in zero or more FourWheelBuffers.
+     * The method superimposes the buffers into one buffer
+     * and uses that to set the wheel powers.
      * If no FourWheelBuffers are supplied, then the method
      * sets wheel powers to the identity buffer, which is
      * a buffer with all zeros.
+     * The resulting superposition is clamped to 1.0 before
+     * using it.
+     * See FourWheelBuffer.clampToValue for more information.
      */
     fun move(vararg buffers: FourWheelBuffer) {
         val superposition = buffers.sum().clampToValue(1.0)
         for ((power, wheel) in superposition.values zip wheels) {
             wheel.power = power
-        }
-    }
-
-    // Reset all hardware on the robot.
-    // Call this method to initialize the robot
-    // before you use it.
-    fun reset() {
-        for (wheel in wheels) {
-            wheel.power = 0.0
         }
     }
 
