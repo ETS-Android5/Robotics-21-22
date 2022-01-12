@@ -30,8 +30,10 @@ data class FourWheelBuffer(
         FourWheelBuffer(values.zip(other.values, ::sum))
 
     // This method scales this buffer by some value.
-    operator fun times(value: Double) =
-        FourWheelBuffer(values.map { it*value })
+    operator fun times(value: Double) = when (value) {
+        1.0 -> this
+        else -> FourWheelBuffer(values.map { it*value })
+    }
     operator fun div(value: Double) = times(1/value)
 }
 
@@ -44,12 +46,10 @@ fun Iterable<FourWheelBuffer>.sum() =
 
 // This function ensures that all values are between -1*value and value
 // by scaling the buffer if one or more values are outside of the range.
-// If value is negative, 
-scales the buffer so that the values are constrained
-// 
+// value cannot be negative.
+// Scales the buffer so that the maximum wheel value is +-1.0.
 fun FourWheelBuffer.clampToValue(value: Double): FourWheelBuffer {
     require(value >= 0.0) { "Value supplied to clampToValue cannot be negative." }
     val maxValue = checkNotNull(values.map(::abs).maxOrNull())
-    if (maxValue >= value) return this
-    else return this * (value/maxValue)
+    return this * min(value/maxValue, 1.0)
 }
