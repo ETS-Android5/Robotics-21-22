@@ -21,13 +21,10 @@ class ExampleTeleOp : LinearOpMode() {
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart()
-        while (opModeIsActive()) {
-            // Controller loop
-            robot.rotate( when {
-                gamepad1.leftTriggerPressed -> -0.5
-                gamepad1.rightTriggerPressed -> 0.5
-                else -> 0.0
-            })
-        }
+        robot.rotate(when {
+            gamepad1.leftTriggerPressed -> -0.5
+            gamepad1.rightTriggerPressed -> 0.5
+            else -> 0.0
+        })
     }
 }

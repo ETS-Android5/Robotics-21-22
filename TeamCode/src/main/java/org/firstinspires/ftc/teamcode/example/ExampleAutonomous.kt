@@ -20,10 +20,12 @@ class ExampleAutonomous : LinearOpMode() {
         // Wait for the game to start (driver presses PLAY)
         waitForStart()
 
-        robot.translate(0.0, 0.5)
-        sleep(1500)
-        robot.translate(0.0, -0.5)
-        sleep(1500)
-        robot.translate(0.0, 0.0)
+        with (robot) {
+            move(translate(0.0, 0.5))
+            sleep(1500)
+            move(translate(0.0, -0.5))
+            sleep(1500)
+            move(translate(0.0, 0.0))
+        }
     }
 }
