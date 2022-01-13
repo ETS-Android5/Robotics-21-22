@@ -22,10 +22,10 @@ class ExampleAutonomous : LinearOpMode() {
 
         with (robot) {
             move(translate(0.0, 0.5))
-            sleep(1500)
-            move(translate(0.0, -0.5))
-            sleep(1500)
-            move(translate(0.0, 0.0))
         }
+        robot.move { translate(0.0, 0.5) }
+        translate(0.0, 0.5).let(robot::move)
+        translate(0.0, 0.5).move()
+        sumOf(translate(0.0, 0.5)).move()
     }
 }

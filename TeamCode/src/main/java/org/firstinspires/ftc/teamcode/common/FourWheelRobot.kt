@@ -59,7 +59,7 @@ abstract class FourWheelRobot(val hardwareMap: HardwareMap) {
             wheel.power = power
         }
     }
-    inline fun move(buffer: FourWheelRobot.() -> FourWheelBuffer) = move(buffers(this))
+    inline fun move(block: FourWheelRobot.() -> FourWheelBuffer) = move(block())
 
     /**
      * This method takes two power values, a px and py, and returns a buffer that
