@@ -12,44 +12,44 @@
 // Custom definitions may go here
 
 // Include common definitions from above.
-apply from: '../build.common.gradle'
-apply plugin: 'kotlin-android'
-apply from: '../build.dependencies.gradle'
+apply(from = "../build.common.gradle")
+apply(plugin = "kotlin-android")
+apply(from = "../build.dependencies.gradle")
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion(31)
     defaultConfig {
-        targetSdkVersion 31
+        targetSdkVersion(31)
     }
     androidResources {
-        noCompress 'tflite'
+        noCompress("tflite")
     }
     // Specifies one flavor dimension.
-    flavorDimensions "defaultFlavor"
+    flavorDimensions("defaultFlavor")
     productFlavors {
         common {
-            applicationIdSuffix ".common"
-            versionNameSuffix "-common"
+            applicationIdSuffix(".common")
+            versionNameSuffix("-common")
         }
         everything {
             applicationIdSuffix ".everything"
             versionNameSuffix "-everything"
         }
         example {
-            applicationIdSuffix ".example"
-            versionNameSuffix "-example"
+            applicationIdSuffix(".example")
+            versionNameSuffix("-example")
         }
         robots {
-            applicationIdSuffix ".robots"
-            versionNameSuffix "-robots"
+            applicationIdSuffix(".robots")
+            versionNameSuffix("-robots")
         }
         machines {
-            applicationIdSuffix ".machines"
-            versionNameSuffix "-machines"
+            applicationIdSuffix(".machines")
+            versionNameSuffix("-machines")
         }
         gadgets {
-            applicationIdSuffix ".gadgets"
-            versionNameSuffix "-gadgets"
+            applicationIdSuffix(".gadgets")
+            versionNameSuffix("-gadgets")
         }
     }
 }
@@ -57,7 +57,7 @@ android {
 kotlin {
     sourceSets {
         main.kotlin {
-            include 'org/firstinspires/ftc/common'
+            include("org/firstinspires/ftc/common")
         }
         everything.kotlin {
             srcDir 'src/main/kotlin'
