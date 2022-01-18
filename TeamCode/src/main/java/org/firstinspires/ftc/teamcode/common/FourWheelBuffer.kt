@@ -9,11 +9,14 @@ data class FourWheelBuffer(
     val leftRear: Double,
     val rightRear: Double,
 ) {
-    // Constructs the default identity buffer, which is a buffer with all 0 values.
-    constructor(): this(
-        0.0, 0.0,
-        0.0, 0.0,
-    )
+    companion object {
+        // This is the identity buffer, a buffer with all 0 values.
+        val empty = FourWheelBuffer(
+            0.0, 0.0,
+            0.0, 0.0,
+        )
+    }
+
     private constructor(values: List<Double>): this(
         values[0], values[1],
         values[2], values[3],
@@ -38,11 +41,12 @@ data class FourWheelBuffer(
 }
 
 // This function superimposes a bunch of buffers and returns a new buffer.
+// If the argument array is empty, then it returns the identity buffer.
 fun sumOf(vararg buffers: FourWheelBuffer) = buffers.sum()
 fun Array<out FourWheelBuffer>.sum() =
-    this.fold(FourWheelBuffer(), FourWheelBuffer::plus)
+    this.fold(FourWheelBuffer.empty, FourWheelBuffer::plus)
 fun Iterable<FourWheelBuffer>.sum() =
-    this.fold(FourWheelBuffer(), FourWheelBuffer::plus)
+    this.fold(FourWheelBuffer.empty, FourWheelBuffer::plus)
 
 // This function ensures that all values are between -1*value and value
 // by scaling the buffer if one or more values are outside of the range.

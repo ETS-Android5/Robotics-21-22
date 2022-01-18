@@ -54,7 +54,6 @@ abstract class FourWheelRobot(val hardwareMap: HardwareMap) {
             motor.power = value
         }
     }
-    inline fun move(block: FourWheelRobot.() -> FourWheelBuffer) = move(block())
 }
 
 /**
