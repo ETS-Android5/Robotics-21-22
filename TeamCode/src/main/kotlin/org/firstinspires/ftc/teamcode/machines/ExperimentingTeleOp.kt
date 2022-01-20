@@ -26,6 +26,7 @@ class ExperimentingTeleOp : LinearOpMode() {
         waitForStart()
 
         robot.resetArm()
+        robot.openClaws()
 
         val defaultScale = 0.7
         var scale = defaultScale
@@ -45,8 +46,8 @@ class ExperimentingTeleOp : LinearOpMode() {
 
     private fun defaultArmControl() {
         when {
-            gamepad1.dpad_left -> robot.armPosition = 0.0
-            gamepad1.dpad_right -> robot.armPosition = 1.0
+            gamepad1.dpad_left -> robot.armPosition -= 0.5
+            gamepad1.dpad_right -> robot.armPosition += 0.5
 
             gamepad1.dpad_up -> robot.armPosition += 0.002
             gamepad1.dpad_down -> robot.armPosition -= 0.002
