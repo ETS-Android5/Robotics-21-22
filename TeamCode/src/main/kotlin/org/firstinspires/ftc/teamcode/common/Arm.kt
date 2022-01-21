@@ -35,6 +35,7 @@ class Arm(
     var position: Double = 0.0
         set(value) {
             check(initialized) { "Arm position was set without initializing arm first." }
+            if (field == value) return
             field = value
 
             // Set outputs based on supplied position and arm ranges.
