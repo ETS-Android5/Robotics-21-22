@@ -25,7 +25,7 @@ class ExperimentingTeleOp : LinearOpMode() {
         // Wait for the game to start (driver presses PLAY)
         waitForStart()
 
-        robot.resetArm()
+        robot.arm.reset()
         robot.openClaws()
 
         val defaultScale = 0.7

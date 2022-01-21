@@ -7,7 +7,9 @@ import com.qualcomm.robotcore.hardware.Servo
 import com.qualcomm.robotcore.hardware.HardwareMap
 
 import org.firstinspires.ftc.teamcode.common.FourWheelRobot
+import org.firstinspires.ftc.teamcode.common.getServo
 import org.firstinspires.ftc.teamcode.common.Arm
+import org.firstinspires.ftc.teamcode.common.getDcMotor
 
 class GadgetsRobot(hardwareMap: HardwareMap) : FourWheelRobot(hardwareMap) {
     override val leftFront = getWheel("leftFront", DcDirection.FORWARD)
@@ -15,15 +17,15 @@ class GadgetsRobot(hardwareMap: HardwareMap) : FourWheelRobot(hardwareMap) {
     override val leftRear = getWheel("leftRear", DcDirection.FORWARD)
     override val rightRear = getWheel("rightRear", DcDirection.FORWARD)
 
-    data class ClawDescriptor(val motor: DcMotor, val open: Double, val close: Double)
+    data class ClawDescriptor(val motor: Servo, val open: Double, val close: Double)
 
     val claws = listOf(
         ClawDescriptor(
-            getServo("clawLeft", Servo.Direction.FORWARD),
+            hardwareMap.getServo("clawLeft", Servo.Direction.FORWARD),
             0.0, 1.0,
         ),
         ClawDescriptor(
-            getServo("clawRight", Servo.Direction.FORWARD),
+            hardwareMap.getServo("clawRight", Servo.Direction.FORWARD),
             0.0, 1.0,
         ),
     )

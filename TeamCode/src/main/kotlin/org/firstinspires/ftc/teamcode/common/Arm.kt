@@ -1,5 +1,8 @@
 package org.firstinspires.ftc.teamcode.common
 
+import com.qualcomm.robotcore.hardware.DcMotor
+import kotlin.math.roundToInt
+
 class Arm(
     val power: Double,
     val armMotors: List<MotorDescriptor>,
@@ -7,7 +10,7 @@ class Arm(
     val initialPosition: Double = 0.0,
 ) {
     private var initialized = false
-    private var zeroPositions: List<Int>
+    private lateinit var zeroPositions: List<Int>
 
     constructor(
         power: Double,

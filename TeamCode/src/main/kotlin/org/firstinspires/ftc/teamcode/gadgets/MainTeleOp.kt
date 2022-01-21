@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import org.firstinspires.ftc.teamcode.common.LateInitConstProperty
 import org.firstinspires.ftc.teamcode.common.leftTriggerPressed
 import org.firstinspires.ftc.teamcode.common.rightTriggerPressed
+import kotlin.math.abs
 
 @TeleOp(name = "Main TeleOp", group = "Main")
 class MainTeleOp : LinearOpMode() {

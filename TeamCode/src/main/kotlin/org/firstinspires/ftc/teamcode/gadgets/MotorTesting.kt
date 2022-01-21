@@ -19,7 +19,7 @@ class MotorTesting : LinearOpMode() {
         // Wait for the game to start (driver presses PLAY)
         waitForStart()
         while (opModeIsActive()) {
-            when {
+            /*when {
                 gamepad1.a -> {
                     robot.clawLeft.position = 0.0
                     robot.clawRight.position = 0.0
@@ -38,7 +38,7 @@ class MotorTesting : LinearOpMode() {
                     for (motor in arrayOf(robot.armLeft, robot.armRight))
                         motor.targetPosition -= 1
                 }
-            }
+            }*/
             val thingsToPrint: Array<Pair<String, Any?>> = arrayOf(
                 "arm left" to robot.arm.armMotors[0].motor.currentPosition,
                 "arm right" to robot.arm.armMotors[1].motor.currentPosition,

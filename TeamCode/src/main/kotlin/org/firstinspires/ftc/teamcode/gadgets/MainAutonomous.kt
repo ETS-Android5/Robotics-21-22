@@ -1,5 +1,8 @@
 package org.firstinspires.ftc.teamcode.gadgets
 
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.delay
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 
@@ -10,7 +13,7 @@ class MainAutonomous : LinearOpMode() {
     // Declare members
     private var robot: GadgetsRobot by LateInitConstProperty()
 
-    override fun runOpMode() = runBlocking {
+    override fun runOpMode(): Unit = runBlocking {
         robot = GadgetsRobot(hardwareMap)
 
         telemetry.addData("Status", "Initialized")
