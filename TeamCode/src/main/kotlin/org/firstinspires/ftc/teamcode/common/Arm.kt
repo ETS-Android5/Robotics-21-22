@@ -8,6 +8,7 @@ class Arm(
     val armMotors: List<MotorDescriptor>,
     val multiplier: Double = 1.0,
     val initialPosition: Double = 0.0,
+    val reference: Double = 0.0
 ) {
     private var initialized = false
     private lateinit var zeroPositions: List<Int>
@@ -17,11 +18,13 @@ class Arm(
         vararg armMotors: MotorDescriptor,
         multiplier: Double = 1.0,
         initialPosition: Double = 0.0,
+        reference: Double = 0.0
     ) : this(
         power,
         armMotors.toList(),
         multiplier,
         initialPosition,
+        reference,
     )
 
     // Call this function after the game has started,
@@ -35,7 +38,7 @@ class Arm(
             it.motor.power = this.power
         }
     }
-    var position: Double = initialPosition
+    var position: Double = reference
         set(value) {
             check(initialized) { "Arm position was set without initializing arm first." }
             field = value
@@ -43,9 +46,12 @@ class Arm(
             // Set outputs based on supplied position and arm ranges.
             for ((arm, zero) in armMotors zip zeroPositions) {
                 val (motor, range) = arm
-                motor.targetPosition = (zero + field * range * multiplier).roundToInt()
+                motor.targetPosition = (zero + (field - reference) * range * multiplier).roundToInt()
             }
         }
+    var current: Double
+        get() = position
+        set(value) = 
 
     // Arm motor descriptor data class. Describes details of each arm motor.
     data class MotorDescriptor(val motor: DcMotor, val range: Int)
