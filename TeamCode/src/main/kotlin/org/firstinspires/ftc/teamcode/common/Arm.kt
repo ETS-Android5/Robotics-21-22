@@ -2,12 +2,24 @@ package org.firstinspires.ftc.teamcode.common
 
 class Arm(
     val power: Double,
-    private vararg val armMotors: MotorDescriptor,
+    val armMotors: List<MotorDescriptor>,
     val multiplier: Double = 1.0,
     val initialPosition: Double = 0.0,
 ) {
     private var initialized = false
     private var zeroPositions: List<Int>
+
+    constructor(
+        power: Double,
+        vararg armMotors: MotorDescriptor,
+        multiplier: Double = 1.0,
+        initialPosition: Double = 0.0,
+    ) : this(
+        power,
+        armMotors.toList(),
+        multiplier,
+        initialPosition,
+    )
 
     // Call this function after the game has started,
     // i.e. the player has pressed play.
