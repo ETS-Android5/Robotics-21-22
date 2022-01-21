@@ -56,7 +56,7 @@ abstract class FourWheelRobot(val hardwareMap: HardwareMap) {
      *
      * The method returns "this", so that the user can chain together commands.
      */
-    fun translate(px: Double, py: Double): FourWheelRobot {
+    open fun translate(px: Double, py: Double): FourWheelRobot {
         // Check for NaN
         if (px.isNaN() || py.isNaN())
             throw IllegalArgumentException("You cannot supply NaN into the translate function.")

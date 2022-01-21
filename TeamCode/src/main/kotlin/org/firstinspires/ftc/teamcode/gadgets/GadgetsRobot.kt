@@ -12,6 +12,14 @@ class GadgetsRobot(hardwareMap: HardwareMap) : FourWheelRobot(hardwareMap) {
     override val rightRear = getWheel("rightRear", DcDirection.FORWARD)
 
     override fun translate(px: Double, py: Double): FourWheelRobot {
+        // Check for NaN
+        if (px.isNaN() || py.isNaN())
+            throw IllegalArgumentException("You cannot supply NaN into the translate function.")
+
+        // Set motor powers
+        wheels.forEach {
+            it.power = py
+        }
         return this
     }
 }

@@ -46,11 +46,11 @@ class ExperimentingTeleOp : LinearOpMode() {
 
     private fun defaultArmControl() {
         when {
-            gamepad1.dpad_left -> robot.armPosition -= 0.5
-            gamepad1.dpad_right -> robot.armPosition += 0.5
+            gamepad1.dpad_left -> robot.arm.position -= 0.5
+            gamepad1.dpad_right -> robot.arm.position += 0.5
 
-            gamepad1.dpad_up -> robot.armPosition += 0.002
-            gamepad1.dpad_down -> robot.armPosition -= 0.002
+            gamepad1.dpad_up -> robot.arm.position += 0.002
+            gamepad1.dpad_down -> robot.arm.position -= 0.002
         }
     }
 

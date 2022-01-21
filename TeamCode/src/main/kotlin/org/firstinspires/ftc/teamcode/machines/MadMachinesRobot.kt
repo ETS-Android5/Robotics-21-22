@@ -11,6 +11,7 @@ import org.firstinspires.ftc.teamcode.common.FourWheelRobot
 import org.firstinspires.ftc.teamcode.common.LateInitConstProperty
 import org.firstinspires.ftc.teamcode.common.getDcMotor
 import org.firstinspires.ftc.teamcode.common.getServo
+import org.firstinspires.ftc.teamcode.common.Arm
 
 class MadMachinesRobot(hardwareMap: HardwareMap) : FourWheelRobot(hardwareMap) {
 
@@ -88,43 +89,10 @@ class MadMachinesRobot(hardwareMap: HardwareMap) : FourWheelRobot(hardwareMap) {
             servo.position = positions.close
     }
 
-    // Arm motor descriptor data class. Describes details of each arm motor.
-    // Each set of bounds = (lower (lowest position), upper (highest position))
-    private data class ArmMotorDescriptor(val motor: DcMotor, val range: Int)
-
-    // Tunable parameters
-    private val armMotors = listOf(
-        ArmMotorDescriptor(armLeft, 500),
-        ArmMotorDescriptor(armRight, 500),
+    // Arm
+    val arm = Arm(
+        power = 0.2,
+        Arm.MotorDescriptor(armLeft, 500),
+        Arm.MotorDescriptor(armRight, 500),
     )
-    private val scaleMultiplier = 1.0
-    private val armInitialPosition = 0.0
-
-    private var armInitialized = false
-    private var zeroPositions: List<Int> by LateInitConstProperty()
-    // Call this function after the game has started,
-    // i.e. the player has pressed play.
-    fun resetArm() {
-        armInitialized = true
-        zeroPositions = armMotors.map { it.motor.currentPosition }
-        armPosition = armInitialPosition
-        for (motor in arrayOf(armLeft, armRight)) {
-            motor.mode = DcMotor.RunMode.RUN_TO_POSITION
-            motor.power = 0.2
-        }
-    }
-    var armPosition: Double = 0.0
-        // Set arm position.
-        // Parameter is a position value between (and including) 0.0 and 1.0.
-        // 0.0 is arm's lowest position, 1.0 is arm's highest position.
-        set(value) {
-            check(armInitialized) { "Arm position was set without initializing arm first." }
-            field = value
-
-            // Set outputs based on supplied position and arm ranges.
-            for ((arm, zero) in armMotors zip zeroPositions) {
-                val (motor, range) = arm
-                motor.targetPosition = ((zero + field * range)*scaleMultiplier).roundToInt()
-            }
-        }
 }
