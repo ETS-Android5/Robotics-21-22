@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.gadgets
 
+import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorSimple.Direction as DcDirection
 import com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior as ZPB
 import com.qualcomm.robotcore.hardware.DcMotor.RunMode as DcRunMode
@@ -17,16 +18,16 @@ class GadgetsRobot(hardwareMap: HardwareMap) : FourWheelRobot(hardwareMap) {
     override val leftRear = getWheel("leftRear", DcDirection.FORWARD)
     override val rightRear = getWheel("rightRear", DcDirection.FORWARD)
 
-    data class ClawDescriptor(val motor: Servo, val open: Double, val close: Double)
+    data class ClawDescriptor(val motor: DcMotor, val open: Int, val close: Int)
 
     val claws = listOf(
         ClawDescriptor(
-            hardwareMap.getServo("clawLeft", Servo.Direction.FORWARD),
-            0.0, 1.0,
+            getClawMotor("clawLeft", DcDirection.FORWARD),
+            0, 1,
         ),
         ClawDescriptor(
-            hardwareMap.getServo("clawRight", Servo.Direction.FORWARD),
-            0.0, 1.0,
+            getClawMotor("clawRight", DcDirection.FORWARD),
+            0, 1,
         ),
     )
 
@@ -46,6 +47,14 @@ class GadgetsRobot(hardwareMap: HardwareMap) : FourWheelRobot(hardwareMap) {
             },
     )
 
+    private fun getClawMotor(
+        name: String,
+        direction: DcDirection,
+    ) = hardwareMap.getDcMotor(
+        name, direction,
+        ZPB.BRAKE, DcRunMode.RUN_USING_ENCODER,
+    )
+
     override fun translate(px: Double, py: Double): FourWheelRobot {
         // Check for NaN
         if (px.isNaN() || py.isNaN())
@@ -58,6 +67,14 @@ class GadgetsRobot(hardwareMap: HardwareMap) : FourWheelRobot(hardwareMap) {
         return this
     }
 
-    fun openClaws() = claws.forEach { it.motor.position = it.open }
-    fun closeClaws() = claws.forEach { it.motor.position = it.close }
+    fun resetClaws() {
+        claws.forEach {
+            it.motor.targetPosition = it.open
+            it.motor.mode = DcMotor.RunMode.RUN_TO_POSITION
+            it.motor.power = 0.2
+        }
+    }
+
+    fun openClaws() = claws.forEach { it.motor.targetPosition = it.open }
+    fun closeClaws() = claws.forEach { it.motor.targetPosition = it.close }
 }

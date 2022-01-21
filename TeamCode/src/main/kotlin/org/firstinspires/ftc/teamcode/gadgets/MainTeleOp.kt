@@ -33,18 +33,18 @@ class MainTeleOp : LinearOpMode() {
             }
             // Arm control
             robot.arm.position = (robot.arm.position + when {
-                gamepad1.dpad_left -> -0.5
-                gamepad1.dpad_right -> +0.5
+                gamepad2.dpad_left -> -0.5
+                gamepad2.dpad_right -> +0.5
 
-                gamepad1.dpad_up -> +0.002
-                gamepad1.dpad_down -> -0.002
+                gamepad2.dpad_up -> +0.002
+                gamepad2.dpad_down -> -0.002
 
                 else -> 0.0
             }).coerceIn(0.0, 1.0)
             // Claws
             when {
-                gamepad1.leftTriggerPressed -> robot.openClaws()
-                gamepad1.rightTriggerPressed -> robot.closeClaws()
+                gamepad2.leftTriggerPressed -> robot.openClaws()
+                gamepad2.rightTriggerPressed -> robot.closeClaws()
             }
             // Movement
             if (abs(gamepad1.right_stick_x) > 0.2)
