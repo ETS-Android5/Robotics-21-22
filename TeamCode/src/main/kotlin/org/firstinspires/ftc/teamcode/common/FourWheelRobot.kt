@@ -22,7 +22,7 @@ abstract class FourWheelRobot(val hardwareMap: HardwareMap) {
     ): DcMotor = hardwareMap.getDcMotor(
         motorName,
         direction,
-        DcMotor.ZeroPowerBehavior.FLOAT,
+        DcMotor.ZeroPowerBehavior.BRAKE,
         DcMotor.RunMode.RUN_USING_ENCODER,
     )
 
@@ -69,7 +69,7 @@ abstract class FourWheelRobot(val hardwareMap: HardwareMap) {
         leftFront.power = a
         rightFront.power = b
         leftRear.power = b
-        rightRear.power = a
+        rightRear.power = a*0.8
         return this
     }
 

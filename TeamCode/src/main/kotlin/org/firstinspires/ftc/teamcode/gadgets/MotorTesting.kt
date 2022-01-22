@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 
 import org.firstinspires.ftc.teamcode.common.LateInitConstProperty
+import kotlin.math.roundToInt
 
 @TeleOp(name = "Motor Tester", group = "Dev")
 class MotorTesting : LinearOpMode() {
@@ -18,6 +19,7 @@ class MotorTesting : LinearOpMode() {
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart()
+        robot.arm.reset()
         while (opModeIsActive()) {
             /*when {
                 gamepad1.a -> {
@@ -39,9 +41,19 @@ class MotorTesting : LinearOpMode() {
                         motor.targetPosition -= 1
                 }
             }*/
+            robot.arm.armMotors.forEach {
+                it.motor.targetPosition += when {
+                    gamepad1.dpad_up -> 1
+                    gamepad1.dpad_down -> -1
+                    else -> 0
+                }
+            }
             val thingsToPrint: Array<Pair<String, Any?>> = arrayOf(
-                "arm left" to robot.arm.armMotors[0].motor.currentPosition,
-                "arm right" to robot.arm.armMotors[1].motor.currentPosition,
+                "arm position" to robot.arm.position,
+                "arm left target position" to robot.arm.armMotors[0].motor.targetPosition,
+                "arm right target position" to robot.arm.armMotors[1].motor.targetPosition,
+                "arm left current position" to robot.arm.armMotors[0].motor.currentPosition,
+                "arm right current position" to robot.arm.armMotors[1].motor.currentPosition,
                 // "left front wheel" to robot.leftFront.currentPosition,
                 // "left trigger" to gamepad1.left_trigger,
                 "left claw" to robot.claws[0].motor.currentPosition,

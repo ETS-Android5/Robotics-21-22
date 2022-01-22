@@ -23,12 +23,12 @@ class MotorTesting : LinearOpMode() {
         while (opModeIsActive()) {
             when {
                 gamepad1.a -> {
-                    robot.clawLeft.position = 0.0
-                    robot.clawRight.position = 0.0
+                    robot.clawLeft.position -= 0.001
+                    robot.clawRight.position -= 0.001
                 }
                 gamepad1.b -> {
-                    robot.clawLeft.position = 1.0
-                    robot.clawRight.position = 1.0
+                    robot.clawLeft.position += 0.001
+                    robot.clawRight.position += 0.001
                 }
             }
             when {

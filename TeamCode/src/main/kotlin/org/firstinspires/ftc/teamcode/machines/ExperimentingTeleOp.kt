@@ -46,8 +46,8 @@ class ExperimentingTeleOp : LinearOpMode() {
 
     private fun defaultArmControl() {
         when {
-            gamepad1.dpad_left -> robot.arm.position -= 0.5
-            gamepad1.dpad_right -> robot.arm.position += 0.5
+//            gamepad1.dpad_left -> robot.arm.position -= 0.5
+//            gamepad1.dpad_right -> robot.arm.position += 0.5
 
             gamepad1.dpad_up -> robot.arm.position += 0.002
             gamepad1.dpad_down -> robot.arm.position -= 0.002
@@ -72,7 +72,7 @@ class ExperimentingTeleOp : LinearOpMode() {
 
         if (gamepad1.right_bumper) {
             if (!rightBumperPressed) {
-                robot.carouselSpinning = !robot.carouselSpinning
+                robot.spinCarousel = !robot.spinCarousel
                 rightBumperPressed = true
             }
         }

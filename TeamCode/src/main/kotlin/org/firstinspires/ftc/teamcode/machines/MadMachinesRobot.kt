@@ -26,18 +26,18 @@ class MadMachinesRobot(hardwareMap: HardwareMap) : FourWheelRobot(hardwareMap) {
     )
     val clawRight = hardwareMap.getServo(
         "clawRight",
-        Servo.Direction.FORWARD,
+        Servo.Direction.REVERSE,
     )
 
     val armLeft = hardwareMap.getDcMotor(
         "armLeft",
-        DcMotorSimple.Direction.REVERSE,
+        DcMotorSimple.Direction.FORWARD,
         DcMotor.ZeroPowerBehavior.BRAKE,
         DcMotor.RunMode.RUN_USING_ENCODER,
     )
     val armRight = hardwareMap.getDcMotor(
         "armRight",
-        DcMotorSimple.Direction.FORWARD,
+        DcMotorSimple.Direction.REVERSE,
         DcMotor.ZeroPowerBehavior.BRAKE,
         DcMotor.RunMode.RUN_USING_ENCODER,
     )
@@ -59,9 +59,9 @@ class MadMachinesRobot(hardwareMap: HardwareMap) : FourWheelRobot(hardwareMap) {
         DcMotor.RunMode.RUN_USING_ENCODER,
     )
 
-    var carouselSpinning: Boolean = false
+    var spinCarousel: Boolean = false
         set(value) {
-            carousel.power = if (value) 0.5 else 0.0
+            carousel.power = if (value) 0.75 else 0.0
             field = value
         }
 
@@ -72,11 +72,11 @@ class MadMachinesRobot(hardwareMap: HardwareMap) : FourWheelRobot(hardwareMap) {
     private val claws = listOf(
         ClawDescriptor(
             clawLeft,
-            SP(open=0.7, close=0.85),
+            SP(open=0.68, close=0.81),
         ),
         ClawDescriptor(
             clawRight,
-            SP(open=0.3, close=0.45),
+            SP(open=0.64, close=0.50),
         ),
     )
 
@@ -91,7 +91,7 @@ class MadMachinesRobot(hardwareMap: HardwareMap) : FourWheelRobot(hardwareMap) {
 
     // Arm
     val arm = Arm(
-        power = 0.2,
+        power = 0.1,
         Arm.MotorDescriptor(armLeft, 500),
         Arm.MotorDescriptor(armRight, 500),
     )
