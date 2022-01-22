@@ -33,7 +33,7 @@ class MainTeleOp : LinearOpMode() {
                 else -> scale
             }
             // Arm control
-            robot.arm.position = (robot.arm.position + when {
+            /*robot.arm.position = (robot.arm.position + when {
                 gamepad2.dpad_left -> -0.5
                 gamepad2.dpad_right -> +0.5
 
@@ -41,7 +41,7 @@ class MainTeleOp : LinearOpMode() {
                 gamepad2.dpad_down -> -0.002
 
                 else -> 0.0
-            }).coerceIn(0.0, 1.0)
+            }).coerceIn(0.0, 1.0)*/
             // Claws
             when {
                 gamepad2.leftTriggerPressed -> robot.openClaws()

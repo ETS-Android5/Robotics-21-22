@@ -61,7 +61,7 @@ class MadMachinesRobot(hardwareMap: HardwareMap) : FourWheelRobot(hardwareMap) {
 
     var spinCarousel: Boolean = false
         set(value) {
-            carousel.power = if (value) 0.75 else 0.0
+            carousel.power = if (value) 1.0 else 0.0
             field = value
         }
 

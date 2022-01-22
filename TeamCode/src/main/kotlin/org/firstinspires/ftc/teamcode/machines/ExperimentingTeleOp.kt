@@ -62,6 +62,7 @@ class ExperimentingTeleOp : LinearOpMode() {
     }
 
     var rightBumperPressed = false
+    var leftBumperPressed = false
     private fun normalConfig(scale: Double, auxGamepad: Gamepad) {
         if (abs(gamepad1.right_stick_x) > 0.2)
             robot.rotate(gamepad1.right_stick_x * scale)
@@ -77,14 +78,10 @@ class ExperimentingTeleOp : LinearOpMode() {
             auxGamepad.rightTriggerPressed -> robot.closeClaws()
         }
 
-        if (auxGamepad.right_bumper) {
-            if (!rightBumperPressed) {
-                robot.spinCarousel = !robot.spinCarousel
-                rightBumperPressed = true
-            }
-        }
-        else {
-            rightBumperPressed = false
+        robot.carousel.power = when {
+            auxGamepad.left_bumper -> +1.0
+            auxGamepad.right_bumper -> -1.0
+            else -> 0.0
         }
 
         defaultArmControl(auxGamepad)
