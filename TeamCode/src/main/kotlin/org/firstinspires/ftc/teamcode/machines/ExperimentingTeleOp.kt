@@ -4,6 +4,7 @@ import kotlin.math.abs
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
+import com.qualcomm.robotcore.hardware.Gamepad
 
 import org.firstinspires.ftc.teamcode.common.LateInitConstProperty
 import org.firstinspires.ftc.teamcode.common.leftTriggerPressed
@@ -30,6 +31,7 @@ class ExperimentingTeleOp : LinearOpMode() {
 
         val defaultScale = 0.7
         var scale = defaultScale
+        var auxGamepad = gamepad2
 
         while (opModeIsActive()) {
             // Controller loop
@@ -39,23 +41,28 @@ class ExperimentingTeleOp : LinearOpMode() {
                 gamepad1.b -> 0.1
                 else -> scale
             }
+            auxGamepad = when {
+                gamepad1.x -> gamepad1
+                gamepad1.y -> gamepad2
+                else -> auxGamepad
+            }
             
-            normalConfig(scale)
+            normalConfig(scale, auxGamepad)
         }
     }
 
-    private fun defaultArmControl() {
+    private fun defaultArmControl(auxGamepad: Gamepad) {
         when {
 //            gamepad1.dpad_left -> robot.arm.position -= 0.5
 //            gamepad1.dpad_right -> robot.arm.position += 0.5
 
-            gamepad1.dpad_up -> robot.arm.position += 0.002
-            gamepad1.dpad_down -> robot.arm.position -= 0.002
+            auxGamepad.dpad_up -> robot.arm.position += 0.002
+            auxGamepad.dpad_down -> robot.arm.position -= 0.002
         }
     }
 
     var rightBumperPressed = false
-    private fun normalConfig(scale: Double) {
+    private fun normalConfig(scale: Double, auxGamepad: Gamepad) {
         if (abs(gamepad1.right_stick_x) > 0.2)
             robot.rotate(gamepad1.right_stick_x * scale)
         else {
@@ -66,11 +73,11 @@ class ExperimentingTeleOp : LinearOpMode() {
         }
 
         when {
-            gamepad1.leftTriggerPressed -> robot.openClaws()
-            gamepad1.rightTriggerPressed -> robot.closeClaws()
+            auxGamepad.leftTriggerPressed -> robot.openClaws()
+            auxGamepad.rightTriggerPressed -> robot.closeClaws()
         }
 
-        if (gamepad1.right_bumper) {
+        if (auxGamepad.right_bumper) {
             if (!rightBumperPressed) {
                 robot.spinCarousel = !robot.spinCarousel
                 rightBumperPressed = true
@@ -80,6 +87,6 @@ class ExperimentingTeleOp : LinearOpMode() {
             rightBumperPressed = false
         }
 
-        defaultArmControl()
+        defaultArmControl(auxGamepad)
     }
 }
