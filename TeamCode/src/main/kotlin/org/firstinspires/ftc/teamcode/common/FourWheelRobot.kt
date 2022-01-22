@@ -14,7 +14,7 @@ abstract class FourWheelRobot(val hardwareMap: HardwareMap) {
 
     // Stores wheel motor fields in row major order
     // (when looking at wheel positions like a matrix)
-    val wheels = listOf(leftFront, rightFront, leftRear, rightRear)
+    val wheels get() = arrayOf(leftFront, rightFront, leftRear, rightRear)
 
     protected fun getWheel(
         motorName: String,

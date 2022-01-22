@@ -13,9 +13,9 @@ import org.firstinspires.ftc.teamcode.common.Arm
 import org.firstinspires.ftc.teamcode.common.getDcMotor
 
 class GadgetsRobot(hardwareMap: HardwareMap) : FourWheelRobot(hardwareMap) {
-    override val leftFront = getWheel("leftFront", DcDirection.FORWARD)
+    override val leftFront = getWheel("leftFront", DcDirection.REVERSE)
     override val rightFront = getWheel("rightFront", DcDirection.FORWARD)
-    override val leftRear = getWheel("leftRear", DcDirection.FORWARD)
+    override val leftRear = getWheel("leftRear", DcDirection.REVERSE)
     override val rightRear = getWheel("rightRear", DcDirection.FORWARD)
 
     data class ClawDescriptor(val motor: DcMotor, val open: Int, val close: Int)

@@ -21,6 +21,7 @@ class MainTeleOp : LinearOpMode() {
         waitForStart()
 
         robot.arm.reset()
+        robot.resetClaws()
 
         val defaultScale = 0.7
         var scale = defaultScale
