@@ -95,4 +95,21 @@ class MadMachinesRobot(hardwareMap: HardwareMap) : FourWheelRobot(hardwareMap) {
         Arm.MotorDescriptor(armLeft, 500),
         Arm.MotorDescriptor(armRight, 500),
     )
+
+    override fun translate(px: Double, py: Double): FourWheelRobot {
+        // Check for NaN
+        if (px.isNaN() || py.isNaN())
+            throw IllegalArgumentException("You cannot supply NaN into the translate function.")
+
+        // Calculate values
+        val a = px + py
+        val b = py - px
+
+        // Set motor powers
+        leftFront.power = a
+        rightFront.power = b
+        leftRear.power = b
+        rightRear.power = a*0.8
+        return this
+    }
 }

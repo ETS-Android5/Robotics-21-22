@@ -35,11 +35,9 @@ class Arm(
             it.motor.power = this.power
         }
     }
-    var position: Double = initialPosition+0.1 // 0.1 to provide a value other than 0.0
-        // and prevent the field == value check from triggering when setting this for first time.
+    var position: Double = initialPosition
         set(value) {
             check(initialized) { "Arm position was set without initializing arm first." }
-            if (field == value) return
             field = value
 
             // Set outputs based on supplied position and arm ranges.

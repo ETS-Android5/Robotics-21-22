@@ -69,7 +69,7 @@ class GadgetsRobot(hardwareMap: HardwareMap) : FourWheelRobot(hardwareMap) {
 
     fun resetClaws() {
         claws.forEach {
-            it.motor.targetPosition = it.open
+            it.motor.targetPosition = it.motor.currentPosition
             it.motor.mode = DcMotor.RunMode.RUN_TO_POSITION
             it.motor.power = 0.2
         }

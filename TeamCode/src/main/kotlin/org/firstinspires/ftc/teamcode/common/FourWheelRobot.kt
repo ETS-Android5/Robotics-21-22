@@ -69,7 +69,7 @@ abstract class FourWheelRobot(val hardwareMap: HardwareMap) {
         leftFront.power = a
         rightFront.power = b
         leftRear.power = b
-        rightRear.power = a*0.8
+        rightRear.power = a
         return this
     }
 
