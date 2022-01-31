@@ -27,30 +27,12 @@ android {
     // Specifies one flavor dimension.
     flavorDimensions "defaultFlavor"
     productFlavors {
-        common {
-//            applicationIdSuffix ".common"
-//            versionNameSuffix "-common"
-        }
-        everything {
-//            applicationIdSuffix ".everything"
-//            versionNameSuffix "-everything"
-        }
-        example {
-//            applicationIdSuffix ".example"
-//            versionNameSuffix "-example"
-        }
-        robots {
-//            applicationIdSuffix ".robots"
-//            versionNameSuffix "-robots"
-        }
-        machines {
-//            applicationIdSuffix ".machines"
-//            versionNameSuffix "-machines"
-        }
-        gadgets {
-//            applicationIdSuffix ".gadgets"
-//            versionNameSuffix "-gadgets"
-        }
+        common;
+        everything;
+        example;
+        robots;
+        machines;
+        gadgets;
     }
 }
 
