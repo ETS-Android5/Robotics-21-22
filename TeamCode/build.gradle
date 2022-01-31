@@ -28,28 +28,28 @@ android {
     flavorDimensions "defaultFlavor"
     productFlavors {
         common {
-            applicationIdSuffix ".common"
-            versionNameSuffix "-common"
+//            applicationIdSuffix ".common"
+//            versionNameSuffix "-common"
         }
         everything {
-            applicationIdSuffix ".everything"
-            versionNameSuffix "-everything"
+//            applicationIdSuffix ".everything"
+//            versionNameSuffix "-everything"
         }
         example {
-            applicationIdSuffix ".example"
-            versionNameSuffix "-example"
+//            applicationIdSuffix ".example"
+//            versionNameSuffix "-example"
         }
         robots {
-            applicationIdSuffix ".robots"
-            versionNameSuffix "-robots"
+//            applicationIdSuffix ".robots"
+//            versionNameSuffix "-robots"
         }
         machines {
-            applicationIdSuffix ".machines"
-            versionNameSuffix "-machines"
+//            applicationIdSuffix ".machines"
+//            versionNameSuffix "-machines"
         }
         gadgets {
-            applicationIdSuffix ".gadgets"
-            versionNameSuffix "-gadgets"
+//            applicationIdSuffix ".gadgets"
+//            versionNameSuffix "-gadgets"
         }
     }
 }
@@ -57,26 +57,26 @@ android {
 kotlin {
     sourceSets {
         main.kotlin {
-            include 'org/firstinspires/ftc/common'
+            include 'org/firstinspires/ftc/teamcode/common/**'
         }
         everything.kotlin {
             srcDir 'src/main/kotlin'
         }
         example.kotlin {
             srcDir 'src/main/kotlin'
-            include 'org/firstinspires/ftc/example'
+            include 'org/firstinspires/ftc/teamcode/example/**'
         }
         robots.kotlin {
             srcDir 'src/main/kotlin'
-            include 'org/firstinspires/ftc/robots'
+            include 'org/firstinspires/ftc/teamcode/robots/**'
         }
         machines.kotlin {
             srcDir 'src/main/kotlin'
-            include 'org/firstinspires/ftc/machines'
+            include 'org/firstinspires/ftc/teamcode/machines/**'
         }
         gadgets.kotlin {
             srcDir 'src/main/kotlin'
-            include 'org/firstinspires/ftc/gadgets'
+            include 'org/firstinspires/ftc/teamcode/gadgets/**'
         }
     }
 }
