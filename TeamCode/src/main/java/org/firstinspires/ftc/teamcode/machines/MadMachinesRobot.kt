@@ -41,10 +41,10 @@ class MadMachinesRobot(hardwareMap: HardwareMap) : FourWheelRobot(hardwareMap) {
     )
 
     val carousel = hardwareMap.getDcMotor(
-            "carousel",
-            DcMotorSimple.Direction.FORWARD,
-            DcMotor.ZeroPowerBehavior.FLOAT,
-            DcMotor.RunMode.RUN_USING_ENCODER,
+        "carousel",
+        DcMotorSimple.Direction.FORWARD,
+        DcMotor.ZeroPowerBehavior.FLOAT,
+        DcMotor.RunMode.RUN_USING_ENCODER,
     )
 
     private fun getArm(

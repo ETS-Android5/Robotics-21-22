@@ -17,7 +17,6 @@ class ExperimentingTeleOp : LinearOpMode() {
 
     override fun runOpMode() {
         robot = MadMachinesRobot(hardwareMap)
-        robot.reset()
 
         telemetry.addData("Status", "Initialized")
         telemetry.update()

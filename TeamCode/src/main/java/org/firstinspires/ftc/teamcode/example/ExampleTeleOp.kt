@@ -14,17 +14,19 @@ class ExampleTeleOp : LinearOpMode() {
 
     override fun runOpMode() {
         robot = ExampleRobot(hardwareMap)
-        robot.reset()
 
         telemetry.addData("Status", "Initialized")
         telemetry.update()
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart()
-        robot.rotate(when {
-            gamepad1.leftTriggerPressed -> -0.5
-            gamepad1.rightTriggerPressed -> 0.5
-            else -> 0.0
-        })
+        robot.move {
+            val power = when {
+                gamepad1.leftTriggerPressed -> -0.5
+                gamepad1.rightTriggerPressed -> 0.5
+                else -> 0.0
+            }
+            rotate(power)
+        }
     }
 }

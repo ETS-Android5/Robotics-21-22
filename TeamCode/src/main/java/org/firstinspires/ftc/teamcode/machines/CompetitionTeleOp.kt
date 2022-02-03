@@ -15,7 +15,6 @@ class CompetitionTeleOp : LinearOpMode() {
 
     override fun runOpMode() {
         robot = MadMachinesRobot(hardwareMap)
-        robot.reset()
 
         telemetry.addData("Status", "Initialized")
         telemetry.update()
@@ -25,7 +24,7 @@ class CompetitionTeleOp : LinearOpMode() {
 
         while (opModeIsActive()) {
             // Controller loop
-            when {
+            val buffer = when {
                 gamepad1.leftTriggerPressed -> robot.rotate(-0.5)
                 gamepad1.rightTriggerPressed -> robot.rotate(0.5)
                 else -> robot.translate(
@@ -33,6 +32,7 @@ class CompetitionTeleOp : LinearOpMode() {
                     py = (-1 * gamepad1.left_stick_y).toDouble(),
                 )
             }
+	    robot.move(buffer)
         }
     }
 }

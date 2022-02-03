@@ -12,7 +12,6 @@ class ExampleAutonomous : LinearOpMode() {
 
     override fun runOpMode() {
         robot = ExampleRobot(hardwareMap)
-        robot.reset()
 
         telemetry.addData("Status", "Initialized")
         telemetry.update()
