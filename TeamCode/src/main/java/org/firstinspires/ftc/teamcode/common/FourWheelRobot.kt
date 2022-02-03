@@ -81,7 +81,6 @@ abstract class FourWheelRobot(val hardwareMap: HardwareMap) {
             b, a,
         )
     }
-    
     fun translate(vector: Vector2d) = translate(vector.x, vector.y)
     
     /**
