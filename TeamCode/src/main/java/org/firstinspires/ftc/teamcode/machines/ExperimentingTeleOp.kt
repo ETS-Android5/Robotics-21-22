@@ -54,13 +54,12 @@ class ExperimentingTeleOp : LinearOpMode() {
 
     var rightBumperPressed = false
     private fun normalConfig(scale: Double) {
-        if (abs(gamepad1.right_stick_x) > 0.2)
-            robot.rotate(gamepad1.right_stick_x * scale)
-        else {
-            robot.translate(
-                px = gamepad1.left_stick_x * scale,
-                py = (-1 * gamepad1.left_stick_y) * scale,
-            )
+        robot.move {
+            (rotate(gamepad1.right_stick_x) +
+            translate(
+                px = gamepad1.left_stick_x,
+                py = (-1 * gamepad1.left_stick_y),
+            )) * scale
         }
 
         when {
