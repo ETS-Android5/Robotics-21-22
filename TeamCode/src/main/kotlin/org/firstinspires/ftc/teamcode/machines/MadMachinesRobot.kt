@@ -72,11 +72,11 @@ class MadMachinesRobot(hardwareMap: HardwareMap) : FourWheelRobot(hardwareMap) {
     private val claws = listOf(
         ClawDescriptor(
             clawLeft,
-            SP(open=0.68, close=0.81),
+            SP(open=0.68, close=0.78),
         ),
         ClawDescriptor(
             clawRight,
-            SP(open=0.64, close=0.50),
+            SP(open=0.50, close=0.36),
         ),
     )
 
