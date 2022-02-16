@@ -13,6 +13,12 @@ class MainAutonomous : LinearOpMode() {
     // Declare members
     private var robot: GadgetsRobot by LateInitConstProperty()
 
+    suspend fun groundToHub() {
+      robot.mainArm.position = 0.8
+      delay(4000)
+      robot.auxilliaryArm.position = 0.8
+    }
+
     override fun runOpMode(): Unit = runBlocking {
         robot = GadgetsRobot(hardwareMap)
 
@@ -39,7 +45,7 @@ class MainAutonomous : LinearOpMode() {
         //Avi auntanamous
 
         //Move to carasol
-        robot.translate(0.0, 0.25)
+        robot.translate(0.0, -0.25)
         delay(1500)
         robot.translate(0.0, 0.0)
 
@@ -53,6 +59,8 @@ class MainAutonomous : LinearOpMode() {
         robot.translate(0.0, -0.25)
         delay(1500)
         robot.translate(0.0, 0.0)
+
+        groundToHub()
 
         //Spin carasol
 
