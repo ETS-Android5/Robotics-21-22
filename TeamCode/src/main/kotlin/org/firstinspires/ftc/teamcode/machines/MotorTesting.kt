@@ -33,6 +33,17 @@ class MotorTesting : LinearOpMode() {
 //                    robot.clawRight.position += 0.001
 //                }
 //            }
+
+            for (lol in arrayOf(
+                Pair(gamepad2.left_bumper, robot.leftFront),
+                Pair(gamepad2.right_bumper, robot.rightFront),
+                Pair(gamepad2.leftTriggerPressed, robot.leftRear),
+                Pair(gamepad2.rightTriggerPressed, robot.rightRear),
+            )) {
+                lol.second.power =
+                    if (lol.first) 0.5 else 0.0
+            }
+
             robot.clawLeft.position += when {
                 gamepad1.leftTriggerPressed -> -0.001
                 gamepad1.left_bumper -> 0.001

@@ -34,20 +34,24 @@ class GadgetsRobot(hardwareMap: HardwareMap) : FourWheelRobot(hardwareMap) {
     val armLeftRear = getGenericMotor("armLeftRear", DcDirection.FORWARD)
     val armRightRear = getGenericMotor("armRightRear", DcDirection.FORWARD)
 
-    val mainArm = Arm(
+    val mainArm = ExactArm(
         power = 0.2,
-        armMotors = listOf(
-            Arm.MotorDescriptor(armLeftFront, 500),
-            Arm.MotorDescriptor(armRightFront, 500),
-        )
+        initialPosition = 0.0,
+        exactArmMotors = listOf(
+            ExactArm.MotorDescriptor(armLeftFront, 500),
+            ExactArm.MotorDescriptor(armRightFront, 500),
+        ),
     )
-    val auxiliaryArm = Arm(
+    val auxiliaryArm = ExactArm(
         power = 0.2,
-        armMotors = listOf(
-            Arm.MotorDescriptor(armLeftRear, 500),
-            Arm.MotorDescriptor(armRightRear, 500),
-        )
+        initialPosition = 0.0,
+        exactArmMotors = listOf(
+            ExactArm.MotorDescriptor(armLeftRear, 500),
+            ExactArm.MotorDescriptor(armRightRear, 500),
+        ),
     )
+
+    val arms = listOf(mainArm, auxiliaryArm)
 
     private fun getGenericMotor(
         name: String,

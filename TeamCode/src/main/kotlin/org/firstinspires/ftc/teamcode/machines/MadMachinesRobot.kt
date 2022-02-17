@@ -96,6 +96,7 @@ class MadMachinesRobot(hardwareMap: HardwareMap) : FourWheelRobot(hardwareMap) {
         Arm.MotorDescriptor(armRight, 500),
     )
 
+    /*
     override fun translate(px: Double, py: Double): FourWheelRobot {
         // Check for NaN
         if (px.isNaN() || py.isNaN())
@@ -112,4 +113,5 @@ class MadMachinesRobot(hardwareMap: HardwareMap) : FourWheelRobot(hardwareMap) {
         rightRear.power = a*0.8
         return this
     }
+    */
 }

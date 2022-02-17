@@ -3,14 +3,14 @@ package org.firstinspires.ftc.teamcode.common
 import com.qualcomm.robotcore.hardware.DcMotor
 import kotlin.math.roundToInt
 
-class Arm(
+open class Arm(
     val power: Double,
     val armMotors: List<MotorDescriptor>,
     val multiplier: Double = 1.0,
     val initialPosition: Double = 0.0,
 ) {
-    private var initialized = false
-    private lateinit var zeroPositions: List<Int>
+    protected var initialized = false
+    protected lateinit var zeroPositions: List<Int>
 
     constructor(
         power: Double,
@@ -26,7 +26,7 @@ class Arm(
 
     // Call this function after the game has started,
     // i.e. the player has pressed play.
-    fun reset() {
+    open fun reset() {
         initialized = true
         zeroPositions = armMotors.map { it.motor.currentPosition }
         position = initialPosition
@@ -35,7 +35,7 @@ class Arm(
             it.motor.power = this.power
         }
     }
-    var position: Double = initialPosition
+    open var position: Double = initialPosition
         set(value) {
             check(initialized) { "Arm position was set without initializing arm first." }
             field = value
@@ -52,11 +52,28 @@ class Arm(
 }
 
 class ExactArm(
-    val power: Double,
-    val armMotors: List<MotorDescriptor>,
+    power: Double,
+    val exactArmMotors: List<ExactArm.MotorDescriptor>,
+    initialPosition: Double,
 ) : Arm(
     power,
-    armMotors,
+    armMotors = exactArmMotors.map { Arm.MotorDescriptor(
+        it.motor, it.bounds.second - it.bounds.first
+    ) },
+    initialPosition = initialPosition,
 ) {
-    
+    override fun reset() {
+        initialized = true
+        zeroPositions = exactArmMotors.map { it.bounds.first }
+        position = initialPosition
+        armMotors.forEach {
+            it.motor.mode = DcMotor.RunMode.RUN_TO_POSITION
+            it.motor.power = this.power
+        }
+    }
+    override var position: Double
+        get() = super.position.get()
+        set(value) = super.position.set(value.coerceIn(0.0, 1.0))
+
+    data class MotorDescriptor(val motor: DcMotor, val bounds: Pair<Int, Int>)
 }
