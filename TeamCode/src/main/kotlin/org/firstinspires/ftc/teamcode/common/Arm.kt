@@ -50,3 +50,13 @@ class Arm(
     // Arm motor descriptor data class. Describes details of each arm motor.
     data class MotorDescriptor(val motor: DcMotor, val range: Int)
 }
+
+class ExactArm(
+    val power: Double,
+    val armMotors: List<MotorDescriptor>,
+) : Arm(
+    power,
+    armMotors,
+) {
+    
+}
