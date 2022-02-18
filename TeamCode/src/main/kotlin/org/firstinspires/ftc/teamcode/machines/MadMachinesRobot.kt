@@ -72,11 +72,11 @@ class MadMachinesRobot(hardwareMap: HardwareMap) : FourWheelRobot(hardwareMap) {
     private val claws = listOf(
         ClawDescriptor(
             clawLeft,
-            SP(open=0.68, close=0.81),
+            SP(open=0.68, close=0.78),
         ),
         ClawDescriptor(
             clawRight,
-            SP(open=0.64, close=0.50),
+            SP(open=0.50, close=0.36),
         ),
     )
 
@@ -96,6 +96,7 @@ class MadMachinesRobot(hardwareMap: HardwareMap) : FourWheelRobot(hardwareMap) {
         Arm.MotorDescriptor(armRight, 500),
     )
 
+    /*
     override fun translate(px: Double, py: Double): FourWheelRobot {
         // Check for NaN
         if (px.isNaN() || py.isNaN())
@@ -112,4 +113,5 @@ class MadMachinesRobot(hardwareMap: HardwareMap) : FourWheelRobot(hardwareMap) {
         rightRear.power = a*0.8
         return this
     }
+    */
 }

@@ -26,7 +26,8 @@ class MotorTesting : LinearOpMode() {
         waitForStart()
 //        robot.arm.reset()
         while (opModeIsActive()) {
-            /*when {
+            /*
+            when {
                 gamepad1.a -> {
                     robot.clawLeft.position = 0.0
                     robot.clawRight.position = 0.0
@@ -45,7 +46,7 @@ class MotorTesting : LinearOpMode() {
                     for (motor in arrayOf(robot.armLeft, robot.armRight))
                         motor.targetPosition -= 1
                 }
-            }*/
+            }
             robot.arm.armMotors.forEach {
 //                    it.motor.targetPosition += when {
                 it.motor.power = when {
@@ -66,12 +67,14 @@ class MotorTesting : LinearOpMode() {
                     gamepad1.right_bumper -> power = +0.25
                 }
             }
+            */
             val thingsToPrint: Array<Pair<String, Any?>> = arrayOf(
-                "arm position" to robot.arm.position,
-                "arm left target position" to robot.arm.armMotors[0].motor.targetPosition,
-                "arm right target position" to robot.arm.armMotors[1].motor.targetPosition,
-                "arm left current position" to robot.arm.armMotors[0].motor.currentPosition,
-                "arm right current position" to robot.arm.armMotors[1].motor.currentPosition,
+                "main arm position" to robot.mainArm.position,
+                "auxiliary arm position" to robot.auxiliaryArm.position,
+                "arm left front current position" to robot.armLeftFront.currentPosition,
+                "arm right front current position" to robot.armRightFront.currentPosition,
+                "arm left rear current position" to robot.armLeftRear.currentPosition,
+                "arm right rear current position" to robot.armRightRear.currentPosition,
                 // "left front wheel" to robot.leftFront.currentPosition,
                 // "left trigger" to gamepad1.left_trigger,
                 "left claw" to robot.claws[0].motor.currentPosition,

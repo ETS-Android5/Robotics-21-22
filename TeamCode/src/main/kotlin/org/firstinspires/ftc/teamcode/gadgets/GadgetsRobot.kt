@@ -4,11 +4,9 @@ import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorSimple.Direction as DcDirection
 import com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior as ZPB
 import com.qualcomm.robotcore.hardware.DcMotor.RunMode as DcRunMode
-import com.qualcomm.robotcore.hardware.Servo
 import com.qualcomm.robotcore.hardware.HardwareMap
 
 import org.firstinspires.ftc.teamcode.common.FourWheelRobot
-import org.firstinspires.ftc.teamcode.common.getServo
 import org.firstinspires.ftc.teamcode.common.Arm
 import org.firstinspires.ftc.teamcode.common.getDcMotor
 
@@ -22,32 +20,40 @@ class GadgetsRobot(hardwareMap: HardwareMap) : FourWheelRobot(hardwareMap) {
 
     val claws = listOf(
         ClawDescriptor(
-            getClawMotor("clawLeft", DcDirection.FORWARD),
+            getGenericMotor("clawLeft", DcDirection.FORWARD),
             0, 1,
         ),
         ClawDescriptor(
-            getClawMotor("clawRight", DcDirection.FORWARD),
+            getGenericMotor("clawRight", DcDirection.FORWARD),
             0, 1,
         ),
     )
 
-    val arm = Arm(
+    val armLeftFront = getGenericMotor("armLeftFront", DcDirection.FORWARD)
+    val armRightFront = getGenericMotor("armRightFront", DcDirection.FORWARD)
+    val armLeftRear = getGenericMotor("armLeftRear", DcDirection.FORWARD)
+    val armRightRear = getGenericMotor("armRightRear", DcDirection.FORWARD)
+
+    val mainArm = ExactArm(
         power = 0.2,
-        armMotors =
-            arrayOf(
-                Triple("armLeft", DcDirection.FORWARD, 500),
-                Triple("armRight", DcDirection.FORWARD, 500),
-            ).map { (name, direction, range) ->
-                hardwareMap.getDcMotor(
-                    name, direction,
-                    ZPB.BRAKE, DcRunMode.RUN_USING_ENCODER,
-                ).let {
-                    Arm.MotorDescriptor(it, range)
-                }
-            },
+        initialPosition = 0.0,
+        exactArmMotors = listOf(
+            ExactArm.MotorDescriptor(armLeftFront, 500),
+            ExactArm.MotorDescriptor(armRightFront, 500),
+        ),
+    )
+    val auxiliaryArm = ExactArm(
+        power = 0.2,
+        initialPosition = 0.0,
+        exactArmMotors = listOf(
+            ExactArm.MotorDescriptor(armLeftRear, 500),
+            ExactArm.MotorDescriptor(armRightRear, 500),
+        ),
     )
 
-    private fun getClawMotor(
+    val arms = listOf(mainArm, auxiliaryArm)
+
+    private fun getGenericMotor(
         name: String,
         direction: DcDirection,
     ) = hardwareMap.getDcMotor(
