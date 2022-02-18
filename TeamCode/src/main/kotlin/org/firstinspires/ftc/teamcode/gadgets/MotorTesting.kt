@@ -26,48 +26,16 @@ class MotorTesting : LinearOpMode() {
         waitForStart()
 //        robot.arm.reset()
         while (opModeIsActive()) {
-            /*
-            when {
-                gamepad1.a -> {
-                    robot.clawLeft.position = 0.0
-                    robot.clawRight.position = 0.0
-                }
-                gamepad1.b -> {
-                    robot.clawLeft.position = 1.0
-                    robot.clawRight.position = 1.0
-                }
+            robot.armRear.power = when {
+                gamepad1.left_bumper -> -0.5
+                gamepad1.right_bumper -> 0.5
+                else -> 0.0
             }
-            when {
-                gamepad1.dpad_up -> {
-                    for (motor in arrayOf(robot.armLeft, robot.armRight))
-                        motor.targetPosition += 1
-                }
-                gamepad1.dpad_down -> {
-                    for (motor in arrayOf(robot.armLeft, robot.armRight))
-                        motor.targetPosition -= 1
-                }
+            robot.armRightFront.power = when {
+                gamepad1.leftTriggerPressed -> -0.5
+                gamepad1.rightTriggerPressed -> 0.5
+                else -> 0.0
             }
-            robot.arm.armMotors.forEach {
-//                    it.motor.targetPosition += when {
-                it.motor.power = when {
-                    gamepad1.dpad_up -> 0.25
-                    gamepad1.dpad_down -> -0.25
-                    else -> 0.0
-                }
-            }
-            with(robot.arm.armMotors[0].motor) {
-                when {
-                    gamepad1.leftTriggerPressed -> power = -0.25
-                    gamepad1.left_bumper -> power = +0.25
-                }
-            }
-            with(robot.arm.armMotors[1].motor) {
-                when {
-                    gamepad1.rightTriggerPressed -> power = -0.25
-                    gamepad1.right_bumper -> power = +0.25
-                }
-            }
-            */
             val thingsToPrint: Array<Pair<String, Any?>> = arrayOf(
                 "main arm position" to robot.mainArm.position,
                 "auxiliary arm position" to robot.auxiliaryArm.position,
