@@ -30,15 +30,15 @@ class GadgetsRobot(hardwareMap: HardwareMap) : FourWheelRobot(hardwareMap) {
         power = 0.2,
         initialPosition = 0.0,
         exactArmMotors = listOf(
-            ExactArm.MotorDescriptor(armLeftFront, 500 to 500),
-            ExactArm.MotorDescriptor(armRightFront, 500 to 500),
+            ExactArm.MotorDescriptor(armLeftFront, -1 to 309),
+            ExactArm.MotorDescriptor(armRightFront, -1 to -317),
         ),
     )
     val auxiliaryArm = ExactArm(
         power = 0.2,
         initialPosition = 0.0,
         exactArmMotors = listOf(
-            ExactArm.MotorDescriptor(armRear, 500 to 500),
+            ExactArm.MotorDescriptor(armRear, -26 to -448),
         ),
     )
 
