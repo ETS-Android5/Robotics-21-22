@@ -24,6 +24,7 @@ class MainTeleOp : LinearOpMode() {
 
         val defaultScale = 0.7
         var scale = defaultScale
+        var rearArmButtonPressed = false
         while (opModeIsActive()) {
             // Set scale
             scale = when {
@@ -40,6 +41,16 @@ class MainTeleOp : LinearOpMode() {
                 gamepad2.dpad_down -> robot.mainArm.position - 0.002
 
                 else -> robot.mainArm.position
+            }
+            // left_bumper is a toggle.
+            if (gamepad2.left_bumper) {
+                if (!rearArmButtonPressed)
+                    robot.auxiliaryArm.position =
+                        if (robot.auxiliaryArm.position == 0.0) 1.0 else 0.0
+                rearArmButtonPressed = true
+            }
+            else {
+                rearArmButtonPressed = false
             }
             // Carousel
             robot.carousel.power = if (gamepad2.right_bumper) 0.5 else 0.0
