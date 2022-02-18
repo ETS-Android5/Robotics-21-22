@@ -53,7 +53,7 @@ class MainTeleOp : LinearOpMode() {
                 rearArmButtonPressed = false
             }
             // Carousel
-            robot.carousel.power = if (gamepad2.right_bumper) 0.5 else 0.0
+            robot.carousel.power = if (gamepad2.right_bumper) 1.0 else 0.0
             // Movement
             if (abs(gamepad1.right_stick_x) > 0.2)
                 robot.rotate(gamepad1.right_stick_x * scale)
