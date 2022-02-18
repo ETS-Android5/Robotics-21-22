@@ -72,8 +72,8 @@ class ExactArm(
         }
     }
     override var position: Double
-        get() = super.position.get()
-        set(value) = super.position.set(value.coerceIn(0.0, 1.0))
+        get() = super.position
+        set(value) { super.position = (value.coerceIn(0.0, 1.0)) }
 
     data class MotorDescriptor(val motor: DcMotor, val bounds: Pair<Int, Int>)
 }

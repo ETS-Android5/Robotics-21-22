@@ -5,6 +5,7 @@ import kotlinx.coroutines.delay
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
+import kotlinx.coroutines.launch
 
 import org.firstinspires.ftc.teamcode.common.LateInitConstProperty
 
@@ -16,7 +17,7 @@ class MainAutonomous : LinearOpMode() {
     suspend fun groundToHub() {
       robot.mainArm.position = 0.8
       delay(4000)
-      robot.auxilliaryArm.position = 0.8
+      robot.auxiliaryArm.position = 0.8
     }
 
     override fun runOpMode(): Unit = runBlocking {
@@ -27,7 +28,7 @@ class MainAutonomous : LinearOpMode() {
 
         launch {
           delay(5000)
-          telemetry.addData("Test", )h
+          telemetry.addData("Test", "")
         }
 
         // Wait for the game to start (driver presses PLAY)

@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap
 
 import org.firstinspires.ftc.teamcode.common.FourWheelRobot
 import org.firstinspires.ftc.teamcode.common.Arm
+import org.firstinspires.ftc.teamcode.common.ExactArm
 import org.firstinspires.ftc.teamcode.common.getDcMotor
 
 class GadgetsRobot(hardwareMap: HardwareMap) : FourWheelRobot(hardwareMap) {
@@ -15,19 +16,6 @@ class GadgetsRobot(hardwareMap: HardwareMap) : FourWheelRobot(hardwareMap) {
     override val rightFront = getWheel("rightFront", DcDirection.FORWARD)
     override val leftRear = getWheel("leftRear", DcDirection.REVERSE)
     override val rightRear = getWheel("rightRear", DcDirection.FORWARD)
-
-    data class ClawDescriptor(val motor: DcMotor, val open: Int, val close: Int)
-
-    val claws = listOf(
-        ClawDescriptor(
-            getGenericMotor("clawLeft", DcDirection.FORWARD),
-            0, 1,
-        ),
-        ClawDescriptor(
-            getGenericMotor("clawRight", DcDirection.FORWARD),
-            0, 1,
-        ),
-    )
 
     val armLeftFront = getGenericMotor("armLeftFront", DcDirection.FORWARD)
     val armRightFront = getGenericMotor("armRightFront", DcDirection.FORWARD)
@@ -38,16 +26,16 @@ class GadgetsRobot(hardwareMap: HardwareMap) : FourWheelRobot(hardwareMap) {
         power = 0.2,
         initialPosition = 0.0,
         exactArmMotors = listOf(
-            ExactArm.MotorDescriptor(armLeftFront, 500),
-            ExactArm.MotorDescriptor(armRightFront, 500),
+            ExactArm.MotorDescriptor(armLeftFront, 500 to 500),
+            ExactArm.MotorDescriptor(armRightFront, 500 to 500),
         ),
     )
     val auxiliaryArm = ExactArm(
         power = 0.2,
         initialPosition = 0.0,
         exactArmMotors = listOf(
-            ExactArm.MotorDescriptor(armLeftRear, 500),
-            ExactArm.MotorDescriptor(armRightRear, 500),
+            ExactArm.MotorDescriptor(armLeftRear, 500 to 500),
+            ExactArm.MotorDescriptor(armRightRear, 500 to 500),
         ),
     )
 
@@ -73,14 +61,4 @@ class GadgetsRobot(hardwareMap: HardwareMap) : FourWheelRobot(hardwareMap) {
         return this
     }
 
-    fun resetClaws() {
-        claws.forEach {
-            it.motor.targetPosition = it.motor.currentPosition
-            it.motor.mode = DcMotor.RunMode.RUN_TO_POSITION
-            it.motor.power = 0.2
-        }
-    }
-
-    fun openClaws() = claws.forEach { it.motor.targetPosition = it.open }
-    fun closeClaws() = claws.forEach { it.motor.targetPosition = it.close }
 }
