@@ -22,6 +22,11 @@ class GadgetsRobot(hardwareMap: HardwareMap) : FourWheelRobot(hardwareMap) {
     val armLeftRear = getGenericMotor("armLeftRear", DcDirection.FORWARD)
     val armRightRear = getGenericMotor("armRightRear", DcDirection.FORWARD)
 
+    val carousel = hardwareMap.getDcMotor(
+        "carousel", DcDirection.FORWARD,
+        ZPB.BRAKE, DcRunMode.RUN_WITHOUT_ENCODER,
+    )
+
     val mainArm = ExactArm(
         power = 0.2,
         initialPosition = 0.0,

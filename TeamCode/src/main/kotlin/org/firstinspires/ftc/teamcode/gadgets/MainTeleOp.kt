@@ -21,7 +21,6 @@ class MainTeleOp : LinearOpMode() {
         waitForStart()
 
         robot.arms.forEach { it.reset() }
-        robot.resetClaws()
 
         val defaultScale = 0.7
         var scale = defaultScale
@@ -33,20 +32,17 @@ class MainTeleOp : LinearOpMode() {
                 else -> scale
             }
             // Arm control
-            /*robot.arm.position = (robot.arm.position + when {
-                gamepad2.dpad_left -> -0.5
-                gamepad2.dpad_right -> +0.5
+            robot.mainArm.position = when {
+                gamepad2.dpad_left -> 0.0
+                gamepad2.dpad_right -> 1.0
 
-                gamepad2.dpad_up -> +0.002
-                gamepad2.dpad_down -> -0.002
+                gamepad2.dpad_up -> robot.mainArm.position + 0.002
+                gamepad2.dpad_down -> robot.mainArm.position - 0.002
 
-                else -> 0.0
-            }).coerceIn(0.0, 1.0)*/
-            // Claws
-            when {
-                gamepad2.leftTriggerPressed -> robot.openClaws()
-                gamepad2.rightTriggerPressed -> robot.closeClaws()
+                else -> robot.mainArm.position
             }
+            // Carousel
+            robot.carousel.power = if (gamepad2.right_bumper) 0.5 else 0.0
             // Movement
             if (abs(gamepad1.right_stick_x) > 0.2)
                 robot.rotate(gamepad1.right_stick_x * scale)
