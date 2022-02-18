@@ -16,8 +16,15 @@ class MainAutonomous : LinearOpMode() {
     suspend fun groundToHub() {
       robot.mainArm.position = 0.8
       delay(4000)
-      robot.auxilliaryArm.position = 0.8
-    }
+      robot.auxiliaryArm.position = 0.8
+      robot.mainArm.position = 0.0
+      robot.auxiliaryArm.position = 0.0
+
+    //suspend fun spinCarousel() {
+      //robot.carouselSpinner.power = 0.75
+      //delay(5000)
+      //robot.carouselSpinner.power = 0.0
+
 
     override fun runOpMode(): Unit = runBlocking {
         robot = GadgetsRobot(hardwareMap)
@@ -34,7 +41,7 @@ class MainAutonomous : LinearOpMode() {
 
         waitForStart()
 
-        //Younjin auntanamous
+        //Younjin test auntanamous
 
         //robot.translate(0.0, 0.25)
         //delay(1500)
@@ -44,32 +51,55 @@ class MainAutonomous : LinearOpMode() {
 
         //Avi auntanamous
 
-        //Move to carasol
-        robot.translate(0.0, -0.25)
-        delay(1500)
-        robot.translate(0.0, 0.0)
-
-        //Insert place on shipping hub
-
+        //turn left 90
         robot.rotate(-0.25)
         delay(1500)
         robot.rotate(0.0)
 
-        //Reverse to carasol
+        //Move back
         robot.translate(0.0, -0.25)
+        delay(500)
+        robot.translate(0.0, 0.0)
+
+        //turn right 90
+        robot.rotate(0.25)
         delay(1500)
+        robot.rotate(0.0)
+
+        //move to hub
+        robot.translate(0.0, -0.25)
+        delay(500)
         robot.translate(0.0, 0.0)
 
         groundToHub()
 
-        //Spin carasol
-
-        //Move to shipping hub
+        //go back
         robot.translate(0.0, 0.25)
+        delay(500)
+        robot.translate(0.0, 0.0)
+
+        //turn right 90
+        robot.rotate(0.25)
+        delay(1500)
+        robot.rotate(0.0)
+
+        //reverse to carousel
+        robot.translate(0.0, -0.25)
+        delay(2500)
+        robot.translate(0.0, 0.0)
+
+        //turn right 90
+        robot.rotate(0.25)
+        delay(1500)
+        robot.rotate(0.0)
+
+        //spin carsouel
+        //spinCarousel()
+
+        //move to loading dock
+        robot.translate(0.0, -0.5)
         delay(4500)
-
-
-
+        robot.translate(0.0, 0.0)
         
     }
 }
