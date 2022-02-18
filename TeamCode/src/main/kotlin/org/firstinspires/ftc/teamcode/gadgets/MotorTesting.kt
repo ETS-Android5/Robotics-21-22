@@ -73,12 +73,9 @@ class MotorTesting : LinearOpMode() {
                 "auxiliary arm position" to robot.auxiliaryArm.position,
                 "arm left front current position" to robot.armLeftFront.currentPosition,
                 "arm right front current position" to robot.armRightFront.currentPosition,
-                "arm left rear current position" to robot.armLeftRear.currentPosition,
-                "arm right rear current position" to robot.armRightRear.currentPosition,
+                "arm rear current position" to robot.armRear.currentPosition,
                 // "left front wheel" to robot.leftFront.currentPosition,
                 // "left trigger" to gamepad1.left_trigger,
-                "left claw" to robot.claws[0].motor.currentPosition,
-                "right claw" to robot.claws[1].motor.currentPosition,
             )
             for ((caption, content) in thingsToPrint)
                 telemetry.addData(caption, content)
